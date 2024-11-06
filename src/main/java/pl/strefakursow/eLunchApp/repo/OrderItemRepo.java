@@ -7,6 +7,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface Product extends JpaRepository<Product, Long> {
-    Optional<Product> findByUUID(UUID uuid);
+public interface OrderItemRepo extends JpaRepository<OrderItemRepo, Long> {
+    Optional<OrderItemRepo> findByUUID(UUID uuid);
 }

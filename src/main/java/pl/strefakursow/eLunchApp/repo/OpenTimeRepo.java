@@ -7,6 +7,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface OperationEvidence extends JpaRepository<OperationEvidence, Long> {
-    Optional<OperationEvidence> findByUUID(UUID uuid);
+public interface OpenTimeRepo extends JpaRepository<OpenTimeRepo, Long> {
+    Optional<OpenTimeRepo> findByUUID(UUID uuid);
 }
