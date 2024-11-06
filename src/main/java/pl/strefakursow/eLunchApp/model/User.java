@@ -38,7 +38,7 @@ public class User {
 
     @NotNull
     @Embedded
-    private LogginData logginData;
+    private LoginData loginData;
 
     @Nullable
     @OneToMany(mappedBy = "user")
@@ -90,12 +90,12 @@ public class User {
         this.addresses = addresses;
     }
 
-    public LogginData getLogginData() {
-        return logginData;
+    public LoginData getLogginData() {
+        return loginData;
     }
 
-    public void setLogginData(LogginData logginData) {
-        this.logginData = logginData;
+    public void setLogginData(LoginData loginData) {
+        this.loginData = loginData;
     }
 
     @Nullable

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Embeddable
-public class LogginData {
+public class LoginData {
 
     @Column(unique = true)
     @Size(min = 3)

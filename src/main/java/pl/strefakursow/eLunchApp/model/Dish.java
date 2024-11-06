@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import javax.annotation.Nullable;
-import java.awt.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity

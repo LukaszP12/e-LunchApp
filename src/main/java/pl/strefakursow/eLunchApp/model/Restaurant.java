@@ -34,7 +34,7 @@ public class Restaurant {
 
     @NotNull
     @Embedded
-    private LogginData logginData;
+    private LoginData loginData;
 
     @NotNull
     @Embedded
@@ -86,12 +86,12 @@ public class Restaurant {
         this.name = name;
     }
 
-    public LogginData getLogginData() {
-        return logginData;
+    public LoginData getLogginData() {
+        return loginData;
     }
 
-    public void setLogginData(LogginData logginData) {
-        this.logginData = logginData;
+    public void setLogginData(LoginData loginData) {
+        this.loginData = loginData;
     }
 
     public CompanyData getCompanyData() {
