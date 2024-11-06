@@ -46,7 +46,8 @@ public class JpaConfiguration {
         entityManagerFactory.setDataSource(dataSource);
         entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter);
         entityManagerFactory.setPackagesToScan(
-                "pl.strefakursow.elunchapp.model"
+                "pl.strefakursow.elunchapp.model",
+                "pl.strefakursow.elunchapp.converter"
         );
         entityManagerFactory.setJpaPropertyMap(ImmutableMap.of(
                 AvailableSettings.DIALECT, "org.hibernate.dialect.MySQL8Dialect",
