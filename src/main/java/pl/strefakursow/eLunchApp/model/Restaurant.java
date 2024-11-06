@@ -10,15 +10,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import pl.strefakursow.eLunchApp.model.enums.Archive;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-public class User {
+public class Restaurant {
 
     @Id
     @GeneratedValue
@@ -28,28 +29,32 @@ public class User {
     @NotNull
     private UUID uuid;
 
-    @NotNull
-    @Embedded
-    private PersonalData personalData;
-
-    @Nullable
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DeliveryAddress> addresses;
+    @NotBlank
+    private String name;
 
     @NotNull
     @Embedded
     private LogginData logginData;
 
-    @Nullable
-    @OneToMany(mappedBy = "user")
+    @NotNull
+    @Embedded
+    private CompanyData companyData;
+
+    @NotNull
+    @Size(max = 7)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OpenTime> openTimes;
+
+    @NotNull
+    @OneToMany(mappedBy = "restaurant")
     private List<Order> orders;
 
     @NotNull
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OperationEvidence> operationEvidences;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MenuItem> menuItems;
 
-    @Nullable
-    @ManyToMany(mappedBy = "users")
+    @NotNull
+    @ManyToMany(mappedBy = "restaurants")
     private List<DiscountCode> discountCodes;
 
     @NotNull
@@ -73,21 +78,12 @@ public class User {
         this.uuid = uuid;
     }
 
-    public PersonalData getPersonalData() {
-        return personalData;
+    public String getName() {
+        return name;
     }
 
-    public void setPersonalData(PersonalData personalData) {
-        this.personalData = personalData;
-    }
-
-    @Nullable
-    public List<DeliveryAddress> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(@Nullable List<DeliveryAddress> addresses) {
-        this.addresses = addresses;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LogginData getLogginData() {
@@ -98,29 +94,43 @@ public class User {
         this.logginData = logginData;
     }
 
-    @Nullable
+    public CompanyData getCompanyData() {
+        return companyData;
+    }
+
+    public void setCompanyData(CompanyData companyData) {
+        this.companyData = companyData;
+    }
+
+    public List<OpenTime> getOpenTimes() {
+        return openTimes;
+    }
+
+    public void setOpenTimes(List<OpenTime> openTimes) {
+        this.openTimes = openTimes;
+    }
+
     public List<Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(@Nullable List<Order> orders) {
+    public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
 
-    public List<OperationEvidence> getOperationEvidences() {
-        return operationEvidences;
+    public List<MenuItem> getMenuItems() {
+        return menuItems;
     }
 
-    public void setOperationEvidences(List<OperationEvidence> operationEvidences) {
-        this.operationEvidences = operationEvidences;
+    public void setMenuItems(List<MenuItem> menuItems) {
+        this.menuItems = menuItems;
     }
 
-    @Nullable
     public List<DiscountCode> getDiscountCodes() {
         return discountCodes;
     }
 
-    public void setDiscountCodes(@Nullable List<DiscountCode> discountCodes) {
+    public void setDiscountCodes(List<DiscountCode> discountCodes) {
         this.discountCodes = discountCodes;
     }
 
@@ -131,5 +141,4 @@ public class User {
     public void setArchive(Archive archive) {
         this.archive = archive;
     }
-
 }

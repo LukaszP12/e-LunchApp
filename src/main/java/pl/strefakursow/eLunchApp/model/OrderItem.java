@@ -4,17 +4,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import pl.strefakursow.eLunchApp.model.MenuItem;
 
-import javax.annotation.Nullable;
-import java.awt.*;
 import java.util.UUID;
 
 @Entity
-public class Dish {
+public class OrderItem {
 
     @Id
     @GeneratedValue
@@ -30,11 +28,7 @@ public class Dish {
 
     @NotNull
     @OneToOne
-    private Product product;
-
-    @Nullable
-    @ManyToMany(mappedBy = "dishes")
-    private List<MenuItem> menuItems;
+    private MenuItem menuItem;
 
     public Long getId() {
         return id;
@@ -60,20 +54,11 @@ public class Dish {
         this.quantity = quantity;
     }
 
-    public Product getProduct() {
-        return product;
+    public MenuItem getMenuItem() {
+        return menuItem;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    @Nullable
-    public List<MenuItem> getMenuItems() {
-        return menuItems;
-    }
-
-    public void setMenuItems(@Nullable List<MenuItem> menuItems) {
-        this.menuItems = menuItems;
+    public void setMenuItem(MenuItem menuItem) {
+        this.menuItem = menuItem;
     }
 }

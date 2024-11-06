@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -33,6 +35,9 @@ public class MenuItem {
     @NotBlank
     private String name;
 
+    @Column(scale = 2, precision = 12)
+    @Digits(integer = 10, fraction = 2)
+    @Min(0)
     @NotNull
     private BigDecimal nettoPrice;
 
@@ -40,6 +45,9 @@ public class MenuItem {
     @Enumerated(EnumType.STRING)
     private VatTax vatTax;
 
+    @Column(scale = 2, precision = 12)
+    @Digits(integer = 10, fraction = 2)
+    @Min(0)
     @NotNull
     private BigDecimal bruttoPrice;
 
@@ -50,7 +58,7 @@ public class MenuItem {
 
     @NotNull
     @ManyToOne
-    private List<Restaurant> restaurants;
+    private Restaurant restaurant;
 
     public Long getId() {
         return id;
