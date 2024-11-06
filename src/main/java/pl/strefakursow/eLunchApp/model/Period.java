@@ -1,11 +1,12 @@
 package pl.strefakursow.eLunchApp.model;
 
 import jakarta.persistence.Embeddable;
+import pl.strefakursow.eLunchApp.validator.PeriodConstraint;
 
 import javax.annotation.Nullable;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+@PeriodConstraint
 @Embeddable
 public class Period {
 
@@ -16,20 +17,20 @@ public class Period {
     private LocalTime end;
 
     @Nullable
-    public LocalDateTime getBegin() {
+    public LocalTime getBegin() {
         return begin;
     }
 
-    public void setBegin(@Nullable LocalDateTime begin) {
+    public void setBegin(@Nullable LocalTime begin) {
         this.begin = begin;
     }
 
     @Nullable
-    public LocalDateTime getEnd() {
+    public LocalTime getEnd() {
         return end;
     }
 
-    public void setEnd(@Nullable LocalDateTime end) {
+    public void setEnd(@Nullable LocalTime end) {
         this.end = end;
     }
 }
