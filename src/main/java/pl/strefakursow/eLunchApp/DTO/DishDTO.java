@@ -2,11 +2,13 @@ package pl.strefakursow.eLunchApp.DTO;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import net.karneim.pojobuilder.GeneratePojoBuilder;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
+@GeneratePojoBuilder
 public class DishDTO {
 
     private Long id;

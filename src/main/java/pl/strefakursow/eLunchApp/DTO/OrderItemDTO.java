@@ -2,9 +2,11 @@ package pl.strefakursow.eLunchApp.DTO;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import net.karneim.pojobuilder.GeneratePojoBuilder;
 
 import java.util.UUID;
 
+@GeneratePojoBuilder
 public class OrderItemDTO {
 
     private Long id;

@@ -4,6 +4,7 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
+import net.karneim.pojobuilder.GeneratePojoBuilder;
 import pl.strefakursow.eLunchApp.model.DeliveryAddress;
 import pl.strefakursow.eLunchApp.model.DiscountCode;
 import pl.strefakursow.eLunchApp.model.LoginData;
@@ -16,6 +17,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
+@GeneratePojoBuilder
 public class UserDTO {
 
     @NotNull

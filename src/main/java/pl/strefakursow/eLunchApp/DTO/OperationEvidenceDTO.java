@@ -5,12 +5,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import net.karneim.pojobuilder.GeneratePojoBuilder;
 import pl.strefakursow.eLunchApp.model.User;
 import pl.strefakursow.eLunchApp.model.enums.EvidenceType;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
+@GeneratePojoBuilder
 public class OperationEvidenceDTO {
 
     private Long id;

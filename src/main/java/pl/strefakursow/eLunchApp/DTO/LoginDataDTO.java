@@ -2,7 +2,9 @@ package pl.strefakursow.eLunchApp.DTO;
 
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import net.karneim.pojobuilder.GeneratePojoBuilder;
 
+@GeneratePojoBuilder
 public class LoginDataDTO {
 
     @Size(min = 3)

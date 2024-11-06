@@ -4,13 +4,13 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
+import net.karneim.pojobuilder.GeneratePojoBuilder;
 import pl.strefakursow.eLunchApp.model.enums.Archive;
 
 import java.util.UUID;
 
+@GeneratePojoBuilder
 public class EmployeeDTO {
-
-    private Long id;
 
     @NotNull
     private UUID uuid;
@@ -26,14 +26,6 @@ public class EmployeeDTO {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Archive archive;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public UUID getUuid() {
         return uuid;

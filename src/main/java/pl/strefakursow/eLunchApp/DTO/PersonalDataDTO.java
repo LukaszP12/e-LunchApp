@@ -3,10 +3,12 @@ package pl.strefakursow.eLunchApp.DTO;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import net.karneim.pojobuilder.GeneratePojoBuilder;
 import pl.strefakursow.eLunchApp.model.enums.Sex;
 
 import javax.annotation.Nullable;
 
+@GeneratePojoBuilder
 @Embeddable
 public class PersonalDataDTO {
 

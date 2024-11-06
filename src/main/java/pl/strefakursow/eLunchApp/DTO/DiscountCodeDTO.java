@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import net.karneim.pojobuilder.GeneratePojoBuilder;
 import org.apache.catalina.User;
 import pl.strefakursow.eLunchApp.model.enums.DiscountUnit;
 
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
+@GeneratePojoBuilder
 public class DiscountCodeDTO {
 
     private Long id;

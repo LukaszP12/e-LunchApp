@@ -1,11 +1,13 @@
 package pl.strefakursow.eLunchApp.DTO;
 
 import jakarta.validation.constraints.NotNull;
+import net.karneim.pojobuilder.GeneratePojoBuilder;
 import pl.strefakursow.eLunchApp.model.User;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
+@GeneratePojoBuilder
 public class DeliveryAddressDTO {
 
     private Long id;

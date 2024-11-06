@@ -3,9 +3,11 @@ package pl.strefakursow.eLunchApp.DTO;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import net.karneim.pojobuilder.GeneratePojoBuilder;
 
 import java.util.UUID;
 
+@GeneratePojoBuilder
 public class IngredientDTO {
 
     private Long id;

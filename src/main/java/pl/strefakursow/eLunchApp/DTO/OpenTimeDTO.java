@@ -4,10 +4,12 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
+import net.karneim.pojobuilder.GeneratePojoBuilder;
 import pl.strefakursow.eLunchApp.model.enums.DayOfWeek;
 
 import java.util.UUID;
 
+@GeneratePojoBuilder
 public class OpenTimeDTO {
 
     private Long id;

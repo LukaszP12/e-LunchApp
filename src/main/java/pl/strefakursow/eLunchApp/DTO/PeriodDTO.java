@@ -1,11 +1,13 @@
 package pl.strefakursow.eLunchApp.DTO;
 
 import jakarta.persistence.Embeddable;
+import net.karneim.pojobuilder.GeneratePojoBuilder;
 import pl.strefakursow.eLunchApp.validator.PeriodConstraint;
 
 import javax.annotation.Nullable;
 import java.time.LocalTime;
 
+@GeneratePojoBuilder
 @PeriodConstraint
 @Embeddable
 public class PeriodDTO {
