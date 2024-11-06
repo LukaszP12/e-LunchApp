@@ -1,51 +1,38 @@
-package pl.strefakursow.eLunchApp.model;
+package pl.strefakursow.eLunchApp.DTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import pl.strefakursow.eLunchApp.model.User;
 
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
-@Table(name = "orders")
-public class Order {
+public class OrderDTO {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
-    @Column(unique = true)
     @NotNull
     private UUID uuid;
 
-    @Column(scale = 2, precision = 12)
     @Digits(integer = 10, fraction = 2)
     @Min(0)
     @NotNull
     private BigDecimal nettoPrice;
 
-    @Column(scale = 2, precision = 12)
     @Digits(integer = 10, fraction = 2)
     @Min(0)
     @NotNull
     private BigDecimal bruttoPrice;
 
     @Nullable
-    @ManyToOne
-    private DiscountCode discountCode;
+    private DiscountCodeDTO discountCodeDTO;
 
     @Column(scale = 2, precision = 12)
     @Digits(integer = 10, fraction = 2)
@@ -59,24 +46,20 @@ public class Order {
 
     @NotNull
     @Embedded
-    private OrderStatus orderStatus;
+    private OrderStatusDTO orderStatusDTO;
 
     @NotNull
     @Size(min = 1)
-    @OneToMany
-    private List<OrderItem> orderItems;
+    private List<OrderItemDTO> orderItemDTOS;
 
     @NotNull
-    @ManyToOne
     private User user;
 
     @NotNull
-    @ManyToOne
-    private Deliverer deliverer;
+    private DelivererDTO delivererDTO;
 
     @NotNull
-    @ManyToOne
-    private Restaurant restaurant;
+    private RestaurantDTO restaurantDTO;
 
 
     public Long getId() {
@@ -112,12 +95,12 @@ public class Order {
     }
 
     @Nullable
-    public DiscountCode getDiscountCode() {
-        return discountCode;
+    public DiscountCodeDTO getDiscountCode() {
+        return discountCodeDTO;
     }
 
-    public void setDiscountCode(@Nullable DiscountCode discountCode) {
-        this.discountCode = discountCode;
+    public void setDiscountCode(@Nullable DiscountCodeDTO discountCodeDTO) {
+        this.discountCodeDTO = discountCodeDTO;
     }
 
     public BigDecimal getAmountToPayBrutto() {
@@ -137,20 +120,20 @@ public class Order {
         this.note = note;
     }
 
-    public OrderStatus getOrderStatus() {
-        return orderStatus;
+    public OrderStatusDTO getOrderStatus() {
+        return orderStatusDTO;
     }
 
-    public void setOrderStatus(OrderStatus orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setOrderStatus(OrderStatusDTO orderStatusDTO) {
+        this.orderStatusDTO = orderStatusDTO;
     }
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
+    public List<OrderItemDTO> getOrderItems() {
+        return orderItemDTOS;
     }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public void setOrderItems(List<OrderItemDTO> orderItemDTOS) {
+        this.orderItemDTOS = orderItemDTOS;
     }
 
     public User getUser() {
@@ -161,19 +144,19 @@ public class Order {
         this.user = user;
     }
 
-    public Deliverer getDeliverer() {
-        return deliverer;
+    public DelivererDTO getDeliverer() {
+        return delivererDTO;
     }
 
-    public void setDeliverer(Deliverer deliverer) {
-        this.deliverer = deliverer;
+    public void setDeliverer(DelivererDTO delivererDTO) {
+        this.delivererDTO = delivererDTO;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public RestaurantDTO getRestaurant() {
+        return restaurantDTO;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setRestaurant(RestaurantDTO restaurantDTO) {
+        this.restaurantDTO = restaurantDTO;
     }
 }

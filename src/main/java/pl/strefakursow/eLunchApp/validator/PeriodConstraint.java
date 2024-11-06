@@ -15,6 +15,8 @@ import java.lang.annotation.Target;
 @Documented
 public @interface PeriodConstraint {
     String message() default "{pl.strefakursow.eLunchApp.validator.PeriodConstraint}";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

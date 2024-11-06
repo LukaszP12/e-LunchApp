@@ -11,8 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.validation.constraints.NotNull;
-import org.checkerframework.checker.units.qual.N;
-import org.hibernate.boot.archive.spi.ArchiveContext;
 import pl.strefakursow.eLunchApp.model.enums.Archive;
 
 import java.util.UUID;

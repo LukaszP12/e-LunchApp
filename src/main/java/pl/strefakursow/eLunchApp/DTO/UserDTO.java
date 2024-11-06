@@ -1,30 +1,23 @@
-package pl.strefakursow.eLunchApp.model;
+package pl.strefakursow.eLunchApp.DTO;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
+import pl.strefakursow.eLunchApp.model.DeliveryAddress;
+import pl.strefakursow.eLunchApp.model.DiscountCode;
+import pl.strefakursow.eLunchApp.model.LoginData;
+import pl.strefakursow.eLunchApp.model.OperationEvidence;
+import pl.strefakursow.eLunchApp.model.PersonalData;
 import pl.strefakursow.eLunchApp.model.enums.Archive;
+
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
-public class User {
+public class UserDTO {
 
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    @Column(unique = true)
     @NotNull
     private UUID uuid;
 
@@ -33,7 +26,6 @@ public class User {
     private PersonalData personalData;
 
     @Nullable
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DeliveryAddress> addresses;
 
     @NotNull
@@ -41,29 +33,18 @@ public class User {
     private LoginData loginData;
 
     @Nullable
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders;
+    private List<OrderDTO> orderDTOS;
 
     @NotNull
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OperationEvidence> operationEvidences;
 
     @Nullable
-    @ManyToMany(mappedBy = "users")
     private List<DiscountCode> discountCodes;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private Archive archive;
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public UUID getUuid() {
         return uuid;
@@ -99,12 +80,12 @@ public class User {
     }
 
     @Nullable
-    public List<Order> getOrders() {
-        return orders;
+    public List<OrderDTO> getOrders() {
+        return orderDTOS;
     }
 
-    public void setOrders(@Nullable List<Order> orders) {
-        this.orders = orders;
+    public void setOrders(@Nullable List<OrderDTO> orderDTOS) {
+        this.orderDTOS = orderDTOS;
     }
 
     public List<OperationEvidence> getOperationEvidences() {

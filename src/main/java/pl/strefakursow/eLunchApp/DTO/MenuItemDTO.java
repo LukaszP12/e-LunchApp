@@ -1,14 +1,7 @@
-package pl.strefakursow.eLunchApp.model;
+package pl.strefakursow.eLunchApp.DTO;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -20,22 +13,16 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
-@Table(name = "menuItems")
-public class MenuItem {
+public class MenuItemDTO {
 
-    @Id
-    @GeneratedValue
     private Long id;
 
-    @Column(unique = true)
     @NotNull
     private UUID uuid;
 
     @NotBlank
     private String name;
 
-    @Column(scale = 2, precision = 12)
     @Digits(integer = 10, fraction = 2)
     @Min(0)
     @NotNull
@@ -45,7 +32,6 @@ public class MenuItem {
     @Enumerated(EnumType.STRING)
     private VatTax vatTax;
 
-    @Column(scale = 2, precision = 12)
     @Digits(integer = 10, fraction = 2)
     @Min(0)
     @NotNull
@@ -53,12 +39,10 @@ public class MenuItem {
 
     @NotNull
     @Size(min = 1)
-    @ManyToMany
-    private List<Dish> dishes;
+    private List<DishDTO> dishDTOS;
 
     @NotNull
-    @ManyToOne
-    private Restaurant restaurant;
+    private RestaurantDTO restaurantDTO;
 
     public Long getId() {
         return id;
@@ -108,12 +92,12 @@ public class MenuItem {
         this.bruttoPrice = bruttoPrice;
     }
 
-    public List<Dish> getDishes() {
-        return dishes;
+    public List<DishDTO> getDishes() {
+        return dishDTOS;
     }
 
-    public void setDishes(List<Dish> dishes) {
-        this.dishes = dishes;
+    public void setDishes(List<DishDTO> dishDTOS) {
+        this.dishDTOS = dishDTOS;
     }
 
 }
