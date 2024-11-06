@@ -1,10 +1,12 @@
 package pl.strefakursow.eLunchApp.model;
 
 import jakarta.persistence.Embeddable;
+import pl.strefakursow.eLunchApp.validator.PeriodTimeConstraint;
 
 import javax.annotation.Nullable;
 import java.time.LocalDateTime;
 
+@PeriodTimeConstraint
 @Embeddable
 public class PeriodTime {
 
