@@ -1,8 +1,10 @@
 package pl.strefakursow.eLunchApp.controller;
 
+import jakarta.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.strefakursow.eLunchApp.DTO.OrderDTO;
+import pl.strefakursow.eLunchApp.DTO.OrderStatusDTO;
 import pl.strefakursow.eLunchApp.service.DelivererService;
 import pl.strefakursow.eLunchApp.service.OrderService;
 import pl.strefakursow.eLunchApp.service.UserService;
@@ -20,6 +23,7 @@ import java.util.UUID;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@Validated
 @RestController
 @RequestMapping(value = "/api/orders", produces = APPLICATION_JSON_VALUE)
 public class OrderController {
@@ -28,6 +32,11 @@ public class OrderController {
     private final DelivererService delivererService;
     private final UserService userService;
     private final ApplicationEventPublisher applicationEventPublisher;
+
+    interface OrderDataUpdateValidation extends Default, OrderDTO.OrderValidation {}
+    interface OrderStatusValidation extends Default, OrderDTO.OrderStatusValidation {}
+    interface GiveOutValidation extends Default, OrderDTO.OrderStatusValidation, OrderStatusDTO.GiveOutStatusValidation {}
+    interface DeliveryValidation extends Default,OrderDTO.OrderStatusValidation,OrderStatusDTO.GiveOutStatusValidation {}
 
     @Autowired
     public OrderController(OrderService orderService, DelivererService delivererService, UserService userService, ApplicationEventPublisher applicationEventPublisher) {
@@ -48,6 +57,7 @@ public class OrderController {
     }
 
     @Transactional
+    @Validated(OrderDataUpdateValidation.class)
     @PutMapping("/{uuid}")
     public void put(@PathVariable UUID uuid, @RequestBody OrderDTO delivererJson) {
 

@@ -31,7 +31,7 @@ public class EmployeeDTO {
     @JsonView(View.Extended.class)
     @NotNull
     @Embedded
-    private LoginDataDTO loginDataDTO;
+    private LogginDataDTO logginDataDTO;
 
     @JsonView(View.Extended.class)
     @NotNull
@@ -54,12 +54,12 @@ public class EmployeeDTO {
         this.personalDataDTO = personalDataDTO;
     }
 
-    public LoginDataDTO getLoginData() {
-        return loginDataDTO;
+    public LogginDataDTO getLoginData() {
+        return logginDataDTO;
     }
 
-    public void setLoginData(LoginDataDTO loginDataDTO) {
-        this.loginDataDTO = loginDataDTO;
+    public void setLoginData(LogginDataDTO logginDataDTO) {
+        this.logginDataDTO = logginDataDTO;
     }
 
     public Archive getArchive() {
