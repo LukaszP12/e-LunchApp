@@ -14,4 +14,6 @@ public interface UserService {
     void delete(UUID uuid);
 
     Optional<UserDTO> getByUuid(UUID uuid);
+
+    void validateNewOperation(UUID uuid,UserDTO userDTO);
 }
