@@ -9,7 +9,7 @@ import net.karneim.pojobuilder.GeneratePojoBuilder;
 
 @GeneratePojoBuilder
 @Embeddable
-public class LoginDataDTO {
+public class LogginDataDTO {
 
     public static class View {
         public interface Basic {

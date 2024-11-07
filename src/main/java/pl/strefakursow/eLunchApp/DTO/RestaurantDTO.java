@@ -46,7 +46,7 @@ public class RestaurantDTO {
     @JsonView(View.Basic.class)
     @NotNull
     @Embedded
-    private LoginDataDTO loginDataDTO;
+    private LogginDataDTO logginDataDTO;
 
     @JsonView(View.Extended.class)
     @NotNull
@@ -102,12 +102,12 @@ public class RestaurantDTO {
         this.name = name;
     }
 
-    public LoginDataDTO getLogginData() {
-        return loginDataDTO;
+    public LogginDataDTO getLogginData() {
+        return logginDataDTO;
     }
 
-    public void setLogginData(LoginDataDTO loginDataDTO) {
-        this.loginDataDTO = loginDataDTO;
+    public void setLogginData(LogginDataDTO logginDataDTO) {
+        this.logginDataDTO = logginDataDTO;
     }
 
     public CompanyDataDTO getCompanyData() {

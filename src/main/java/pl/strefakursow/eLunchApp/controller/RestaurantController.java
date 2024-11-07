@@ -1,7 +1,9 @@
 package pl.strefakursow.eLunchApp.controller;
 
+import jakarta.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,11 +20,14 @@ import java.util.UUID;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@Validated
 @RestController
 @RequestMapping(value = "/api/restaurants", produces = APPLICATION_JSON_VALUE)
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
+
+    interface DataUpdateValidation extends Default,RestaurantDTO.DataUpdateValidation {}
 
     @Autowired
     public RestaurantController(RestaurantService restaurantService) {
@@ -40,8 +45,9 @@ public class RestaurantController {
     }
 
     @Transactional
+    @Validated(DataUpdateValidation.class)
     @PutMapping("/{uuid}")
-    public void put(@PathVariable UUID uuid, @RequestBody RestaurantDTO delivererJson) {
+    public void put(@PathVariable UUID uuid, @RequestBody RestaurantDTO json) {
 
     }
 
