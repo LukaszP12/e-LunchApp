@@ -7,6 +7,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface DiscountCode extends JpaRepository<DiscountCode, Long> {
-    Optional<DiscountCode> findByUUID(UUID uuid);
+public interface DiscountCodeRepo extends JpaRepository<DiscountCodeRepo, Long> {
+    Optional<DiscountCodeRepo> findByUUID(UUID uuid);
 }
