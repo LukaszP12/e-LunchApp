@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.strefakursow.eLunchApp.DTO.EmployeeDTO;
 import pl.strefakursow.eLunchApp.DTO.IngredientDTO;
+import pl.strefakursow.eLunchApp.DTO.LogginDataDTO;
+import pl.strefakursow.eLunchApp.DTO.PersonalDataDTO;
 import pl.strefakursow.eLunchApp.service.IngredientService;
 
 import java.util.List;
@@ -21,6 +23,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(value = "/api/ingredients", produces = APPLICATION_JSON_VALUE)
 public class IngredientController {
+    interface IngredientListView extends IngredientDTO.View.Basic {}
+    interface IngredientView extends IngredientListView {}
 
     private final IngredientService ingredientService;
 

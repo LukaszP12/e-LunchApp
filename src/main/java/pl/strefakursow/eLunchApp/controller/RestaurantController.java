@@ -11,7 +11,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.strefakursow.eLunchApp.DTO.CompanyDataDTO;
 import pl.strefakursow.eLunchApp.DTO.DishDTO;
+import pl.strefakursow.eLunchApp.DTO.IngredientDTO;
+import pl.strefakursow.eLunchApp.DTO.LogginDataDTO;
+import pl.strefakursow.eLunchApp.DTO.OpenTimeDTO;
+import pl.strefakursow.eLunchApp.DTO.ProductDTO;
 import pl.strefakursow.eLunchApp.DTO.RestaurantDTO;
 import pl.strefakursow.eLunchApp.service.RestaurantService;
 
@@ -24,6 +29,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(value = "/api/restaurants", produces = APPLICATION_JSON_VALUE)
 public class RestaurantController {
+    interface RestaurantListView extends RestaurantDTO.View.Basic {}
+    interface RestaurantView extends RestaurantDTO.View.Extended, LogginDataDTO.View.Basic, CompanyDataDTO.View.Extended, OpenTimeDTO.View.Extended {}
 
     private final RestaurantService restaurantService;
 
