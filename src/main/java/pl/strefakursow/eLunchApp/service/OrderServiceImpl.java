@@ -1,9 +1,12 @@
 package pl.strefakursow.eLunchApp.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import pl.strefakursow.eLunchApp.DTO.OrderDTO;
 import pl.strefakursow.eLunchApp.DTO.OrderStatusDTO;
 import pl.strefakursow.eLunchApp.DTO.UserDTO;
+import pl.strefakursow.eLunchApp.model.User;
 import pl.strefakursow.eLunchApp.repo.DelivererRepo;
 import pl.strefakursow.eLunchApp.repo.DiscountCodeRepo;
 import pl.strefakursow.eLunchApp.repo.MenuItemRepo;
@@ -65,22 +68,30 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public void setIsGivenOut(UUID uuid, OrderStatusDTO orderStatusDTO) {
+
+    }
+
+    @Override
     public void setIsPaid(OrderDTO orderDTO) {
-
+        OrderStatusDTO orderStatusDTO = new OrderStatusDTO();
+        orderStatusDTO.setPaid(true);
+        orderDTO.setOrderStatus(orderStatusDTO);
     }
 
     @Override
-    public void setIsGivenOut(OrderDTO orderDTO, OrderStatusDTO orderStatusDTO) {
-
-    }
-
-    @Override
-    public void setIsDelivered(OrderDTO orderDTO, OrderStatusDTO orderStatusDTO) {
+    public void setIsDelivered(UUID uuid, OrderStatusDTO orderStatusDTO) {
 
     }
 
     @Override
     public UserDTO newOperationForPaidOrder(OrderDTO orderDTO) {
         return null;
+    }
+
+    @Override
+    public List<OrderDTO> getByUser(UserDTO userDTO) {
+        User user = userRepo.findByUUID(userDTO.getUuid()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return user.getOrders();
     }
 }
