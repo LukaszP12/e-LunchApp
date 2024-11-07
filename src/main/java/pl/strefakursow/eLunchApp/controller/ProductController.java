@@ -9,8 +9,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.strefakursow.eLunchApp.DTO.DelivererDTO;
+import pl.strefakursow.eLunchApp.DTO.DishDTO;
+import pl.strefakursow.eLunchApp.DTO.IngredientDTO;
 import pl.strefakursow.eLunchApp.DTO.OrderDTO;
 import pl.strefakursow.eLunchApp.DTO.ProductDTO;
+import pl.strefakursow.eLunchApp.DTO.RestaurantDTO;
+import pl.strefakursow.eLunchApp.DTO.UserDTO;
 import pl.strefakursow.eLunchApp.service.ProductService;
 
 import java.util.List;
@@ -21,6 +26,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(value = "/api/products", produces = APPLICATION_JSON_VALUE)
 public class ProductController {
+    interface ProductListView extends ProductDTO.View.Basic {}
+    interface ProductView extends ProductDTO.View.Extended, IngredientDTO.View.Basic, DishDTO.View.Basic {}
 
     private final ProductService productService;
 

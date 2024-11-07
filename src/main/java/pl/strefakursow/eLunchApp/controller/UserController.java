@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.strefakursow.eLunchApp.DTO.DeliveryAddressDTO;
+import pl.strefakursow.eLunchApp.DTO.DiscountCodeDTO;
+import pl.strefakursow.eLunchApp.DTO.LogginDataDTO;
+import pl.strefakursow.eLunchApp.DTO.OperationEvidenceDTO;
+import pl.strefakursow.eLunchApp.DTO.PersonalDataDTO;
 import pl.strefakursow.eLunchApp.DTO.UserDTO;
 import pl.strefakursow.eLunchApp.service.UserService;
 
@@ -24,12 +29,15 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(value = "/api/users", produces = APPLICATION_JSON_VALUE)
 public class UserController {
-
-    private final UserService userService;
-    private final ApplicationEventPublisher applicationEventPublisher;
+    interface UserListView extends UserDTO.View.Basic, PersonalDataDTO.View.Basic {}
+    interface UserView extends UserDTO.View.Extended, PersonalDataDTO.View.Extended, LogginDataDTO.View.Basic,
+            DeliveryAddressDTO.View.Basic, OperationEvidenceDTO.View.Extended, DiscountCodeDTO.View.Extended {}
 
     interface DataUpdateValidation extends Default,UserDTO.DataUpdateValidation {}
     interface NewOperationValidation extends Default,UserDTO.NewOperationValidation {}
+
+    private final UserService userService;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
     public UserController(UserService userService, ApplicationEventPublisher applicationEventPublisher) {

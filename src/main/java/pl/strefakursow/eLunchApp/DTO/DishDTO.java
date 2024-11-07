@@ -14,30 +14,28 @@ import java.util.UUID;
 public class DishDTO {
 
     public static class View {
-        public interface Basic {
-        }
-
-        public interface Extended extends DeliveryAddressDTO.View.Basic {
-        }
+        public interface Id {}
+        public interface Basic extends Id{}
+        public interface Extended extends Basic {}
     }
     public interface DataUpdateValidation {}
 
     private Long id;
 
-    @JsonView(DiscountCodeDTO.View.Basic.class)
+    @JsonView(View.Id.class)
     @NotNull
     private UUID uuid;
 
-    @JsonView(DiscountCodeDTO.View.Extended.class)
+    @JsonView(View.Extended.class)
     @NotNull
     @Min(1)
     private Integer quantity;
 
-    @JsonView(DiscountCodeDTO.View.Extended.class)
+    @JsonView(View.Extended.class)
     @NotNull
     private ProductDTO productDTO;
 
-    @JsonView(DiscountCodeDTO.View.Extended.class)
+    @JsonView(View.Extended.class)
     @Nullable
     @Null(groups = DataUpdateValidation.class)
     private List<MenuItemDTO> menuItemDTOS;
