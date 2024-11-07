@@ -1,5 +1,6 @@
 package pl.strefakursow.eLunchApp.DTO;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Digits;
@@ -17,32 +18,47 @@ import java.util.UUID;
 @GeneratePojoBuilder
 public class MenuItemDTO {
 
+    public static class View {
+        public interface Basic {
+        }
+
+        public interface Extended extends DeliveryAddressDTO.View.Basic {
+        }
+    }
+
     private Long id;
 
+    @JsonView(View.Basic.class)
     @NotNull
     private UUID uuid;
 
+    @JsonView(View.Basic.class)
     @NotBlank
     private String name;
 
+    @JsonView(View.Extended.class)
     @Digits(integer = 10, fraction = 2)
     @Min(0)
     @NotNull
     private BigDecimal nettoPrice;
 
+    @JsonView(View.Extended.class)
     @NotNull
     @Enumerated(EnumType.STRING)
     private VatTax vatTax;
 
+    @JsonView(View.Extended.class)
     @Digits(integer = 10, fraction = 2)
     @Min(0)
     @NotNull
     private BigDecimal bruttoPrice;
 
+    @JsonView(View.Extended.class)
     @NotNull
     @Size(min = 1)
     private List<DishDTO> dishDTOS;
 
+    @JsonView(View.Extended.class)
     @NotNull
     private RestaurantDTO restaurantDTO;
 

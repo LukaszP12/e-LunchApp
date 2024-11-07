@@ -1,5 +1,6 @@
 package pl.strefakursow.eLunchApp.DTO;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Lob;
@@ -18,48 +19,71 @@ import java.util.UUID;
 @GeneratePojoBuilder
 public class OrderDTO {
 
+    public static class View {
+        public interface Basic {
+        }
+
+        public interface Extended extends OperationEvidenceDTO.View.Basic {
+        }
+    }
+
     private Long id;
 
+    @JsonView(View.Extended.class)
     @NotNull
     private UUID uuid;
 
+    @JsonView(View.Extended.class)
     @Digits(integer = 10, fraction = 2)
     @Min(0)
     @NotNull
     private BigDecimal nettoPrice;
 
+    @JsonView(View.Extended.class)
     @Digits(integer = 10, fraction = 2)
     @Min(0)
     @NotNull
     private BigDecimal bruttoPrice;
 
+    @JsonView(View.Extended.class)
     @Nullable
     private DiscountCodeDTO discountCodeDTO;
 
+    @JsonView(View.Extended.class)
     @Column(scale = 2, precision = 12)
     @Digits(integer = 10, fraction = 2)
     @Min(0)
     @NotNull
     private BigDecimal amountToPayBrutto;
 
+    @JsonView(View.Extended.class)
     @Nullable
     @Lob
     private String note;
 
+    @JsonView(View.Basic.class)
     @NotNull
     @Embedded
     private OrderStatusDTO orderStatusDTO;
 
+    @JsonView(View.Extended.class)
+    @NotNull
+    private DeliveryAddressDTO deliveryAddressDTO;
+
+    @JsonView(View.Extended.class)
     @NotNull
     @Size(min = 1)
     private List<OrderItemDTO> orderItemDTOS;
 
+    @JsonView(View.Basic.class)
     @NotNull
     private User user;
 
+    @JsonView(View.Basic.class)
     @NotNull
     private DelivererDTO delivererDTO;
 
+    @JsonView(View.Basic.class)
     @NotNull
     private RestaurantDTO restaurantDTO;
 

@@ -1,5 +1,6 @@
 package pl.strefakursow.eLunchApp.DTO;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -12,17 +13,29 @@ import java.util.UUID;
 @GeneratePojoBuilder
 public class EmployeeDTO {
 
+    public static class View {
+        public interface Basic {
+        }
+
+        public interface Extended extends DeliveryAddressDTO.View.Basic {
+        }
+    }
+
+    @JsonView(View.Basic.class)
     @NotNull
     private UUID uuid;
 
+    @JsonView(View.Basic.class)
     @NotNull
     @Embedded
     private PersonalDataDTO personalDataDTO;
 
+    @JsonView(View.Extended.class)
     @NotNull
     @Embedded
     private LoginDataDTO loginDataDTO;
 
+    @JsonView(View.Extended.class)
     @NotNull
     @Enumerated(EnumType.STRING)
     private Archive archive;
