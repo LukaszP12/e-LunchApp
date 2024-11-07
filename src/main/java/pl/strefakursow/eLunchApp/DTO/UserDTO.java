@@ -124,4 +124,12 @@ public class UserDTO {
         this.archive = archive;
     }
 
+    public List<OrderDTO> getOrders() {
+        return null;
+    }
+
+    public UserDTO getDeliveryAddress() {
+        return
+    }
+
 }

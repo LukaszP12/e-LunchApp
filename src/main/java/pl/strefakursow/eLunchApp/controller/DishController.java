@@ -1,8 +1,10 @@
 package pl.strefakursow.eLunchApp.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.Valid;
 import jakarta.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import pl.strefakursow.eLunchApp.DTO.DelivererDTO;
 import pl.strefakursow.eLunchApp.DTO.DiscountCodeDTO;
 import pl.strefakursow.eLunchApp.DTO.DishDTO;
@@ -42,21 +45,24 @@ public class DishController {
         this.dishService = dishService;
     }
 
+    @JsonView(DishListView.class)
     @GetMapping
     public List<DishDTO> get() {
-        return null;
+        return dishService.getAll();
     }
 
+    @JsonView(DishView.class)
     @GetMapping("/{uuid}")
     public DishDTO get(@PathVariable UUID uuid) {
-        return null;
+        return dishService.getByUuid(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @Transactional
     @Validated(DishDataUpdateValidation.class)
     @PutMapping("/{uuid}")
     public void put(@PathVariable UUID uuid, @RequestBody @Valid DishDTO json) {
-
+        dishService.put(uuid,json);
     }
 
     @Transactional
