@@ -1,5 +1,6 @@
 package pl.strefakursow.eLunchApp.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ public class DishController {
 
     private DishService dishService;
 
+    @Autowired
     public DishController(DishService dishService) {
         this.dishService = dishService;
     }
