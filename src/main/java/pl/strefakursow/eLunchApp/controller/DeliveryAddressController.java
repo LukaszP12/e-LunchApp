@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.strefakursow.eLunchApp.DTO.DelivererDTO;
-import pl.strefakursow.eLunchApp.DTO.DiscountCodeDTO;
-import pl.strefakursow.eLunchApp.service.DiscountCodeService;
+import pl.strefakursow.eLunchApp.DTO.DeliveryAddressDTO;
+import pl.strefakursow.eLunchApp.service.DeliveryAddressService;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,29 +18,29 @@ import java.util.UUID;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(value = "/api/discount-codes", produces = APPLICATION_JSON_VALUE)
-public class DiscountCodeController {
+@RequestMapping(value = "/api/delivery-address", produces = APPLICATION_JSON_VALUE)
+public class DeliveryAddressController {
 
-    private final DiscountCodeService discountCodeService;
+    private final DeliveryAddressService deliveryAddressService;
 
     @Autowired
-    public DiscountCodeController(DiscountCodeService discountCodeService) {
-        this.discountCodeService = discountCodeService;
+    public DeliveryAddressController(DeliveryAddressService deliveryAddressService) {
+        this.deliveryAddressService = deliveryAddressService;
     }
 
     @GetMapping
-    public List<DiscountCodeDTO> get() {
+    public List<DeliveryAddressDTO> get() {
         return null;
     }
 
     @GetMapping("/{uuid}")
-    public DelivererDTO get(@PathVariable UUID uuid) {
+    public DeliveryAddressDTO get(@PathVariable UUID uuid) {
         return null;
     }
 
     @Transactional
     @PutMapping("/{uuid}")
-    public void put(@PathVariable UUID uuid, @RequestBody DiscountCodeDTO delivererJson) {
+    public void put(@PathVariable UUID uuid, @RequestBody DeliveryAddressDTO json) {
 
     }
 
