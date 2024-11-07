@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.strefakursow.eLunchApp.DTO.DishDTO;
+import pl.strefakursow.eLunchApp.DTO.MenuItemDTO;
 import pl.strefakursow.eLunchApp.DTO.OpenTimeDTO;
+import pl.strefakursow.eLunchApp.DTO.RestaurantDTO;
 import pl.strefakursow.eLunchApp.service.OpenTimeService;
 
 import java.util.List;
@@ -21,6 +24,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(value = "/api/open-time", produces = APPLICATION_JSON_VALUE)
 public class OpenTimeController {
+    interface OpenTimeListView extends OpenTimeDTO.View.Basic {}
+    interface OpenTimeView extends MenuItemDTO.View.Extended,RestaurantDTO.View.Id {}
 
     private OpenTimeService openTimeService;
 

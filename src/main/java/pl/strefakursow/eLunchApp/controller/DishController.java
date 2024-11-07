@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.strefakursow.eLunchApp.DTO.DelivererDTO;
 import pl.strefakursow.eLunchApp.DTO.DiscountCodeDTO;
 import pl.strefakursow.eLunchApp.DTO.DishDTO;
+import pl.strefakursow.eLunchApp.DTO.MenuItemDTO;
+import pl.strefakursow.eLunchApp.DTO.PeriodDTO;
+import pl.strefakursow.eLunchApp.DTO.ProductDTO;
 import pl.strefakursow.eLunchApp.service.DishService;
+import pl.strefakursow.eLunchApp.service.MenuItemService;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +30,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(value = "/api/dishes", produces = APPLICATION_JSON_VALUE)
 public class DishController {
+    interface DishListView extends DishDTO.View.Basic {}
+    interface DishView extends DishDTO.View.Extended, ProductDTO.View.Extended, MenuItemDTO.View.Basic {}
 
     private DishService dishService;
 

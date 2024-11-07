@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.strefakursow.eLunchApp.DTO.DishDTO;
+import pl.strefakursow.eLunchApp.DTO.IngredientDTO;
 import pl.strefakursow.eLunchApp.DTO.MenuItemDTO;
+import pl.strefakursow.eLunchApp.DTO.RestaurantDTO;
 import pl.strefakursow.eLunchApp.service.MenuItemService;
 
 import java.util.List;
@@ -21,6 +24,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(value = "/api/menu-item", produces = APPLICATION_JSON_VALUE)
 public class MenuItemController {
+    interface MenuItemListView extends MenuItemDTO.View.Basic, RestaurantDTO.View.Id {}
+    interface MenuItemView extends MenuItemDTO.View.Extended,RestaurantDTO.View.Id, DishDTO.View.Id {}
 
     private final MenuItemService menuItemService;
 

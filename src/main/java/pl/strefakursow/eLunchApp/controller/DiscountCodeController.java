@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.strefakursow.eLunchApp.DTO.DelivererDTO;
+import pl.strefakursow.eLunchApp.DTO.DeliveryAddressDTO;
 import pl.strefakursow.eLunchApp.DTO.DiscountCodeDTO;
+import pl.strefakursow.eLunchApp.DTO.PeriodDTO;
+import pl.strefakursow.eLunchApp.DTO.UserDTO;
 import pl.strefakursow.eLunchApp.service.DiscountCodeService;
 
 import java.util.List;
@@ -22,6 +25,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(value = "/api/discount-codes", produces = APPLICATION_JSON_VALUE)
 public class DiscountCodeController {
+    interface DiscountCodeListView extends DiscountCodeDTO.View.Basic, PeriodDTO.View.Basic {}
+    interface DiscountCodeView extends DiscountCodeDTO.View.Extended, PeriodDTO.View.Basic {}
 
     private final DiscountCodeService discountCodeService;
 
@@ -32,7 +37,7 @@ public class DiscountCodeController {
 
     @GetMapping
     public List<DiscountCodeDTO> get() {
-        return null;
+        return discountCodeService.getAll();
     }
 
     @GetMapping("/{uuid}")

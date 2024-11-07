@@ -13,8 +13,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.strefakursow.eLunchApp.DTO.DelivererDTO;
+import pl.strefakursow.eLunchApp.DTO.EmployeeDTO;
+import pl.strefakursow.eLunchApp.DTO.MenuItemDTO;
+import pl.strefakursow.eLunchApp.DTO.OpenTimeDTO;
 import pl.strefakursow.eLunchApp.DTO.OrderDTO;
 import pl.strefakursow.eLunchApp.DTO.OrderStatusDTO;
+import pl.strefakursow.eLunchApp.DTO.RestaurantDTO;
+import pl.strefakursow.eLunchApp.DTO.UserDTO;
 import pl.strefakursow.eLunchApp.service.DelivererService;
 import pl.strefakursow.eLunchApp.service.OrderService;
 import pl.strefakursow.eLunchApp.service.UserService;
@@ -28,6 +34,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 @RequestMapping(value = "/api/orders", produces = APPLICATION_JSON_VALUE)
 public class OrderController {
+    interface OrderListView extends OrderDTO.View.Basic, UserDTO.View.Id, DelivererDTO.View.Id,RestaurantDTO.View.Id {}
+    interface OrderView extends OrderDTO.View.Extended,UserDTO.View.Id, DelivererDTO.View.Id,RestaurantDTO.View.Id {}
 
     private final OrderService orderService;
     private final DelivererService delivererService;
