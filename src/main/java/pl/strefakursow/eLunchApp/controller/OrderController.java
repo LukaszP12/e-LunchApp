@@ -1,5 +1,6 @@
 package pl.strefakursow.eLunchApp.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -59,7 +60,7 @@ public class OrderController {
     @Transactional
     @Validated(OrderDataUpdateValidation.class)
     @PutMapping("/{uuid}")
-    public void put(@PathVariable UUID uuid, @RequestBody OrderDTO delivererJson) {
+    public void put(@PathVariable UUID uuid, @RequestBody @Valid OrderDTO delivererJson) {
 
     }
 

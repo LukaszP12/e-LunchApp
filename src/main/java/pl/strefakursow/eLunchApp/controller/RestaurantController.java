@@ -1,5 +1,6 @@
 package pl.strefakursow.eLunchApp.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +48,7 @@ public class RestaurantController {
     @Transactional
     @Validated(DataUpdateValidation.class)
     @PutMapping("/{uuid}")
-    public void put(@PathVariable UUID uuid, @RequestBody RestaurantDTO json) {
+    public void put(@PathVariable UUID uuid, @RequestBody @Valid RestaurantDTO json) {
 
     }
 

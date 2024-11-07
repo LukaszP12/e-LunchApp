@@ -1,5 +1,6 @@
 package pl.strefakursow.eLunchApp.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,7 +41,7 @@ public class MenuItemController {
 
     @Transactional
     @PutMapping("/{uuid}")
-    public void put(@PathVariable UUID uuid, @RequestBody MenuItemDTO delivererJson) {
+    public void put(@PathVariable UUID uuid, @RequestBody @Valid MenuItemDTO delivererJson) {
 
     }
 
