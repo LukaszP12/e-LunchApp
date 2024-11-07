@@ -1,6 +1,5 @@
 package pl.strefakursow.eLunchApp.service;
 
-import pl.strefakursow.eLunchApp.DTO.DiscountCodeDTO;
 import pl.strefakursow.eLunchApp.DTO.DishDTO;
 
 import java.util.List;
