@@ -14,11 +14,9 @@ import java.util.UUID;
 public class EmployeeDTO {
 
     public static class View {
-        public interface Basic {
-        }
-
-        public interface Extended extends DeliveryAddressDTO.View.Basic {
-        }
+        public interface Id {}
+        public interface Basic extends Id {}
+        public interface Extended extends DeliveryAddressDTO.View.Basic {}
     }
 
     @JsonView(View.Basic.class)
