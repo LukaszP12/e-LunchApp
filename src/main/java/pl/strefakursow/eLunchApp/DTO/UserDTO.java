@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Embedded;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
+import jakarta.validation.constraints.Size;
 import net.karneim.pojobuilder.GeneratePojoBuilder;
 import pl.strefakursow.eLunchApp.model.DeliveryAddress;
 import pl.strefakursow.eLunchApp.model.LoginData;
@@ -18,9 +20,20 @@ import java.util.UUID;
 public class UserDTO {
 
     public static class View {
-        public interface Id { }
-        public interface Basic extends Id { }
-        public interface Extended extends Basic { }
+        public interface Id {
+        }
+
+        public interface Basic extends Id {
+        }
+
+        public interface Extended extends Basic {
+        }
+    }
+
+    public interface DataUpdateValidation {
+    }
+
+    public interface NewOperationValidation {
     }
 
     @JsonView(View.Id.class)
@@ -43,9 +56,13 @@ public class UserDTO {
 
     @JsonIgnore
     @Nullable
+    @Null(groups = DataUpdateValidation.class)
     private List<OrderDTO> orders;
 
     @JsonView(View.Extended.class)
+    @NotNull
+    @Size(max = 0, groups = DataUpdateValidation.class)
+    @Size(min = 1, max = 1, groups = DataUpdateValidation.class)
     private List<OperationEvidenceDTO> operationEvidences;
 
     @JsonView(View.Extended.class)

@@ -7,10 +7,12 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
 import net.karneim.pojobuilder.GeneratePojoBuilder;
 import pl.strefakursow.eLunchApp.model.enums.Archive;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,9 +20,17 @@ import java.util.UUID;
 public class RestaurantDTO {
 
     public static class View {
-        public interface Id{}
-        public interface Basic extends Id {}
-        public interface Extended extends Basic {}
+        public interface Id {
+        }
+
+        public interface Basic extends Id {
+        }
+
+        public interface Extended extends Basic {
+        }
+    }
+
+    public interface DataUpdateValidation {
     }
 
     private Long id;
@@ -49,11 +59,13 @@ public class RestaurantDTO {
     private List<OpenTimeDTO> openTimeDTOS;
 
     @JsonView(View.Extended.class)
-    @NotNull
+    @Nullable
+    @Null(groups = DataUpdateValidation.class)
     private List<OrderDTO> orderDTOS;
 
     @JsonView(View.Extended.class)
-    @NotNull
+    @Nullable
+    @Null(groups = DataUpdateValidation.class)
     private List<MenuItemDTO> menuItemDTOS;
 
     @JsonIgnore

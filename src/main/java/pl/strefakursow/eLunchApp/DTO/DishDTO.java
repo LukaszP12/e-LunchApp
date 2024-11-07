@@ -3,6 +3,7 @@ package pl.strefakursow.eLunchApp.DTO;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import net.karneim.pojobuilder.GeneratePojoBuilder;
 
 import javax.annotation.Nullable;
@@ -19,6 +20,7 @@ public class DishDTO {
         public interface Extended extends DeliveryAddressDTO.View.Basic {
         }
     }
+    public interface DataUpdateValidation {}
 
     private Long id;
 
@@ -37,6 +39,7 @@ public class DishDTO {
 
     @JsonView(DiscountCodeDTO.View.Extended.class)
     @Nullable
+    @Null(groups = DataUpdateValidation.class)
     private List<MenuItemDTO> menuItemDTOS;
 
     public Long getId() {
