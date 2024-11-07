@@ -10,11 +10,9 @@ import java.util.List;
 public class DelivererDTO extends EmployeeDTO {
 
     public static class View {
-        public interface Basic {
-        }
-
-        public interface Extended extends Basic {
-        }
+        public interface Id extends EmployeeDTO.View.Id{}
+        public interface Basic extends EmployeeDTO.View.Basic{}
+        public interface Extended extends Basic,EmployeeDTO.View.Extended {}
     }
 
     @JsonView(View.Extended.class)

@@ -43,6 +43,7 @@ public class PersonalDataDTO {
     @Nullable
     private String email;
 
+
     @JsonView(View.Basic.class)
     public String nameAndSurname() {
         return Joiner.on(" ").skipNulls().join(name, surname);
