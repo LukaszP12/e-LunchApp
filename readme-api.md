@@ -1,15 +1,12 @@
 GET /delivery-addressess/ - lista adresów\
 GET /delivery-addressess/uuid - konkretny adres\
 PUT /delivery-addressess/uuid - dodanie nowego adresu lub aktualizacja istniejącego\
-<<<<<<< HEAD
 DELETE /delivery-addressess/uuid - usuwanie adresu dostawy
-=======
 DELETE /delivery-addressess/uuid - usuwanie adresu dostawy\
 
 GET /ingredients/ - lista adresów\
 GET /ingredients/uuid - konkretny adres\
 PUT /ingredients/uuid - dodanie nowego adresu lub aktualizacja istniejącego\
-<<<<<<< HEAD
 DELETE /ingredients/uuid - usuwanie adresu dostawy
 
 GET /open-times/ - lista czasów otwarcia\
@@ -33,6 +30,5 @@ POST /users/uuid/new-operation (User + jedno elementowa lista z ewidencją opera
 dodawanie nowej operacji\
 PUT /users/uuid - dodanie nowego użytkownika\
 DELETE /users/uuid - usunięcie użytkownika\
-GET /users/uuid/delivery-addresses - adresy dostawy dla użytkownika
-=======
-DELETE /ingredients/uuid - usuwanie adresu dostawy\
+GET /users/uuid/delivery-addresses - adresy dostawy dla użytkownika\
+DELETE /ingredients/uuid - usuwanie adresu dostawy
