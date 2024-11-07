@@ -1,5 +1,6 @@
 package pl.strefakursow.eLunchApp.DTO;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import net.karneim.pojobuilder.GeneratePojoBuilder;
@@ -11,18 +12,30 @@ import java.util.UUID;
 @GeneratePojoBuilder
 public class DishDTO {
 
+    public static class View {
+        public interface Basic {
+        }
+
+        public interface Extended extends DeliveryAddressDTO.View.Basic {
+        }
+    }
+
     private Long id;
 
+    @JsonView(DiscountCodeDTO.View.Basic.class)
     @NotNull
     private UUID uuid;
 
+    @JsonView(DiscountCodeDTO.View.Extended.class)
     @NotNull
     @Min(1)
     private Integer quantity;
 
+    @JsonView(DiscountCodeDTO.View.Extended.class)
     @NotNull
     private ProductDTO productDTO;
 
+    @JsonView(DiscountCodeDTO.View.Extended.class)
     @Nullable
     private List<MenuItemDTO> menuItemDTOS;
 

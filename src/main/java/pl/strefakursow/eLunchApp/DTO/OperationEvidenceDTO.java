@@ -1,5 +1,7 @@
 package pl.strefakursow.eLunchApp.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Digits;
@@ -15,22 +17,33 @@ import java.time.Instant;
 @GeneratePojoBuilder
 public class OperationEvidenceDTO {
 
+    public static class View {
+        public interface Basic {
+        }
+
+        public interface Extended extends Basic {
+        }
+    }
+
     private Long id;
 
+    @JsonView(View.Basic.class)
     @NotNull
     private Instant date;
 
+    @JsonView(View.Basic.class)
     @NotNull
     @Enumerated(EnumType.STRING)
     private EvidenceType type;
 
+    @JsonView(View.Extended.class)
     @NotNull
     @Digits(integer = 10, fraction = 2)
     @Min(0)
     private BigDecimal amount;
 
-    @NotNull
-    private User user;
+    @JsonIgnore
+    private UserDTO user;
 
     public Long getId() {
         return id;
@@ -64,11 +77,11 @@ public class OperationEvidenceDTO {
         this.amount = amount;
     }
 
-    public User getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 }

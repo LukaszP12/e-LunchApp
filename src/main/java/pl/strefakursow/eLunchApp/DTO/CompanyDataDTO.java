@@ -1,5 +1,6 @@
 package pl.strefakursow.eLunchApp.DTO;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.validation.constraints.NotNull;
@@ -9,22 +10,36 @@ import net.karneim.pojobuilder.GeneratePojoBuilder;
 @Embeddable
 public class CompanyDataDTO {
 
+    public static class View {
+        public interface Basic {
+        }
+
+        public interface Extended extends Basic {
+        }
+    }
+
+    @JsonView(View.Basic.class)
     @NotNull
     private String name;
 
+    @JsonView(View.Extended.class)
     @Embedded
     @NotNull
     private AddressDTO addressDTO;
 
+    @JsonView(View.Extended.class)
     @NotNull
     private String NIP;
 
+    @JsonView(View.Extended.class)
     @NotNull
     private String REGON;
 
+    @JsonView(View.Extended.class)
     @NotNull
     private String phone;
 
+    @JsonView(View.Extended.class)
     @NotNull
     private String email;
 

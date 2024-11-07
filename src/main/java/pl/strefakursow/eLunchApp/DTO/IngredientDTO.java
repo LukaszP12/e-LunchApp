@@ -1,5 +1,6 @@
 package pl.strefakursow.eLunchApp.DTO;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,8 +11,14 @@ import java.util.UUID;
 @GeneratePojoBuilder
 public class IngredientDTO {
 
+    public static class View {
+        public interface Basic {
+        }
+    }
+
     private Long id;
 
+    @JsonView(View.Basic.class)
     @NotNull
     private UUID uuid;
 

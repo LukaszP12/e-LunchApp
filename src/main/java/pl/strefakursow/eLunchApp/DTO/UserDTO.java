@@ -1,17 +1,14 @@
 package pl.strefakursow.eLunchApp.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.Embedded;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import net.karneim.pojobuilder.GeneratePojoBuilder;
 import pl.strefakursow.eLunchApp.model.DeliveryAddress;
-import pl.strefakursow.eLunchApp.model.DiscountCode;
 import pl.strefakursow.eLunchApp.model.LoginData;
-import pl.strefakursow.eLunchApp.model.OperationEvidence;
 import pl.strefakursow.eLunchApp.model.PersonalData;
 import pl.strefakursow.eLunchApp.model.enums.Archive;
-
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -20,31 +17,43 @@ import java.util.UUID;
 @GeneratePojoBuilder
 public class UserDTO {
 
+    public static class View {
+        public interface Id { }
+        public interface Basic extends Id { }
+        public interface Extended extends Basic { }
+    }
+
+    @JsonView(View.Id.class)
     @NotNull
     private UUID uuid;
 
+    @JsonView(View.Basic.class)
     @NotNull
     @Embedded
     private PersonalData personalData;
 
+    @JsonView(View.Extended.class)
     @Nullable
-    private List<DeliveryAddress> addresses;
+    private List<DeliveryAddress> deliveryAddresses;
 
+    @JsonView(View.Extended.class)
     @NotNull
     @Embedded
     private LoginData loginData;
 
+    @JsonIgnore
     @Nullable
-    private List<OrderDTO> orderDTOS;
+    private List<OrderDTO> orders;
 
-    @NotNull
-    private List<OperationEvidence> operationEvidences;
+    @JsonView(View.Extended.class)
+    private List<OperationEvidenceDTO> operationEvidences;
 
+    @JsonView(View.Extended.class)
     @Nullable
-    private List<DiscountCode> discountCodes;
+    private List<DiscountCodeDTO> discountCodes;
 
+    @JsonView(View.Extended.class)
     @NotNull
-    @Enumerated(EnumType.STRING)
     private Archive archive;
 
 
@@ -64,15 +73,6 @@ public class UserDTO {
         this.personalData = personalData;
     }
 
-    @Nullable
-    public List<DeliveryAddress> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(@Nullable List<DeliveryAddress> addresses) {
-        this.addresses = addresses;
-    }
-
     public LoginData getLogginData() {
         return loginData;
     }
@@ -81,29 +81,21 @@ public class UserDTO {
         this.loginData = loginData;
     }
 
-    @Nullable
-    public List<OrderDTO> getOrders() {
-        return orderDTOS;
-    }
 
-    public void setOrders(@Nullable List<OrderDTO> orderDTOS) {
-        this.orderDTOS = orderDTOS;
-    }
-
-    public List<OperationEvidence> getOperationEvidences() {
+    public @NotNull List<OperationEvidenceDTO> getOperationEvidences() {
         return operationEvidences;
     }
 
-    public void setOperationEvidences(List<OperationEvidence> operationEvidences) {
+    public void setOperationEvidences(List<OperationEvidenceDTO> operationEvidences) {
         this.operationEvidences = operationEvidences;
     }
 
     @Nullable
-    public List<DiscountCode> getDiscountCodes() {
+    public List<DiscountCodeDTO> getDiscountCodes() {
         return discountCodes;
     }
 
-    public void setDiscountCodes(@Nullable List<DiscountCode> discountCodes) {
+    public void setDiscountCodes(@Nullable List<DiscountCodeDTO> discountCodes) {
         this.discountCodes = discountCodes;
     }
 
