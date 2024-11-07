@@ -7,6 +7,7 @@ import jakarta.persistence.Lob;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
 import net.karneim.pojobuilder.GeneratePojoBuilder;
 import pl.strefakursow.eLunchApp.model.User;
@@ -23,8 +24,14 @@ public class OrderDTO {
         public interface Basic {
         }
 
-        public interface Extended extends OperationEvidenceDTO.View.Basic {
+        public interface Extended extends Basic {
         }
+    }
+
+    public interface OrderValidation {
+    }
+
+    public interface OrderStatusValidation {
     }
 
     private Long id;
@@ -36,6 +43,7 @@ public class OrderDTO {
     @JsonView(View.Extended.class)
     @Digits(integer = 10, fraction = 2)
     @Min(0)
+    @Null(groups = OrderValidation.class)
     @NotNull
     private BigDecimal nettoPrice;
 
@@ -58,11 +66,11 @@ public class OrderDTO {
 
     @JsonView(View.Extended.class)
     @Nullable
-    @Lob
     private String note;
 
     @JsonView(View.Basic.class)
-    @NotNull
+    @Null(groups = OrderValidation.class)
+    @NotNull(groups = OrderStatusValidation.class)
     @Embedded
     private OrderStatusDTO orderStatusDTO;
 

@@ -1,6 +1,7 @@
 package pl.strefakursow.eLunchApp.DTO;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import jakarta.validation.constraints.Null;
 import net.karneim.pojobuilder.GeneratePojoBuilder;
 
 import javax.annotation.Nullable;
@@ -15,8 +16,11 @@ public class DelivererDTO extends EmployeeDTO {
         public interface Extended extends Basic,EmployeeDTO.View.Extended {}
     }
 
+    public interface NewDelivererValidation {};
+
     @JsonView(View.Extended.class)
     @Nullable
+    @Null(groups = NewDelivererValidation.class)
     private List<OrderDTO> orderDTOS;
 
     @Nullable
