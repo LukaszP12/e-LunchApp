@@ -48,7 +48,7 @@ public class EmployeeController {
 
     @Transactional
     @PutMapping("/{uuid}")
-    public void put(@PathVariable UUID uuid, @RequestBody @Valid EmployeeDTO delivererJson) {
+    public void put(@PathVariable UUID uuid, @RequestBody @Valid EmployeeDTO json) {
 
     }
 

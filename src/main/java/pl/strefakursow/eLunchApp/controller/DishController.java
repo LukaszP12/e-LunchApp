@@ -55,7 +55,7 @@ public class DishController {
     @Transactional
     @Validated(DishDataUpdateValidation.class)
     @PutMapping("/{uuid}")
-    public void put(@PathVariable UUID uuid, @RequestBody @Valid DishDTO delivererJson) {
+    public void put(@PathVariable UUID uuid, @RequestBody @Valid DishDTO json) {
 
     }
 

@@ -59,7 +59,7 @@ public class UserController {
     @Transactional
     @Validated(DataUpdateValidation.class)
     @PutMapping("/{uuid}")
-    public void put(@PathVariable UUID uuid, @RequestBody @Valid UserDTO delivererJson) {
+    public void put(@PathVariable UUID uuid, @RequestBody @Valid UserDTO json) {
 
     }
 

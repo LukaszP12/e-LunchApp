@@ -46,7 +46,7 @@ public class MenuItemController {
 
     @Transactional
     @PutMapping("/{uuid}")
-    public void put(@PathVariable UUID uuid, @RequestBody @Valid MenuItemDTO delivererJson) {
+    public void put(@PathVariable UUID uuid, @RequestBody @Valid MenuItemDTO json) {
 
     }
 

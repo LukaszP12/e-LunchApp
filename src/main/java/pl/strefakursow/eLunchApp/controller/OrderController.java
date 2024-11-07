@@ -68,7 +68,7 @@ public class OrderController {
     @Transactional
     @Validated(OrderDataUpdateValidation.class)
     @PutMapping("/{uuid}")
-    public void put(@PathVariable UUID uuid, @RequestBody @Valid OrderDTO delivererJson) {
+    public void put(@PathVariable UUID uuid, @RequestBody @Valid OrderDTO json) {
 
     }
 

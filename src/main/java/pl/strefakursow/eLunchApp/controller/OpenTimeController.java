@@ -46,7 +46,7 @@ public class OpenTimeController {
 
     @Transactional
     @PutMapping("/{uuid}")
-    public void put(@PathVariable UUID uuid, @RequestBody @Valid OpenTimeDTO delivererJson) {
+    public void put(@PathVariable UUID uuid, @RequestBody @Valid OpenTimeDTO json) {
 
     }
 

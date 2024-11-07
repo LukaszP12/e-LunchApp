@@ -49,7 +49,7 @@ public class ProductController {
 
     @Transactional
     @PutMapping("/{uuid}")
-    public void put(@PathVariable UUID uuid, @RequestBody @Valid ProductDTO delivererJson) {
+    public void put(@PathVariable UUID uuid, @RequestBody @Valid ProductDTO json) {
 
     }
 

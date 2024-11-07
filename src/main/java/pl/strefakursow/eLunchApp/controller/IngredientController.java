@@ -46,7 +46,7 @@ public class IngredientController {
 
     @Transactional
     @PutMapping("/{uuid}")
-    public void put(@PathVariable UUID uuid, @RequestBody @Valid IngredientDTO delivererJson) {
+    public void put(@PathVariable UUID uuid, @RequestBody @Valid IngredientDTO json) {
 
     }
 
