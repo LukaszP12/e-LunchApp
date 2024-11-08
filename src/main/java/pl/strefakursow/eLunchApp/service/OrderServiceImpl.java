@@ -6,7 +6,6 @@ import org.springframework.web.server.ResponseStatusException;
 import pl.strefakursow.eLunchApp.DTO.OrderDTO;
 import pl.strefakursow.eLunchApp.DTO.OrderStatusDTO;
 import pl.strefakursow.eLunchApp.DTO.UserDTO;
-import pl.strefakursow.eLunchApp.model.DeliveryAddress;
 import pl.strefakursow.eLunchApp.model.Order;
 import pl.strefakursow.eLunchApp.model.User;
 import pl.strefakursow.eLunchApp.repo.DelivererRepo;
@@ -19,6 +18,7 @@ import pl.strefakursow.eLunchApp.repo.RestaurantRepo;
 import pl.strefakursow.eLunchApp.repo.UserRepo;
 import pl.strefakursow.eLunchApp.utils.ConverterUtils;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -78,20 +78,39 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void setIsGivenOut(UUID uuid, OrderStatusDTO orderStatusDTO) {
+    public void setIsPaid(OrderDTO orderDTO) {
+        Order order = orderRepo.findByUUID(orderDTO.getUuid())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        if (!order.getOrderStatus().getIsPaid()) {
+            order.getOrderStatus().setIsPaid(true);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
-    public void setIsPaid(OrderDTO orderDTO) {
-        OrderStatusDTO orderStatusDTO = new OrderStatusDTO();
-        orderStatusDTO.setPaid(true);
-        orderDTO.setOrderStatus(orderStatusDTO);
+    public void setIsGivenOut(UUID uuid, OrderStatusDTO orderStatusDTO) {
+        Order order = orderRepo.findByUUID(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (!order.getOrderStatus().getIsPaid() || orderStatusDTO.getDeliveryTime() != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        order.getOrderStatus().setGiveOutTime(orderStatusDTO.getGiveOutTime());
     }
 
     @Override
     public void setIsDelivered(UUID uuid, OrderStatusDTO orderStatusDTO) {
+        Order order = orderRepo.findByUUID(uuid)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        if (!order.getOrderStatus().getIsPaid() || order.getOrderStatus().getGiveOutTime() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        order.getOrderStatus().setDeliveryTime(orderStatusDTO.getDeliveryTime());
     }
 
     @Override
