@@ -1,12 +1,17 @@
 package pl.strefakursow.eLunchApp.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import pl.strefakursow.eLunchApp.DTO.UserDTO;
+import pl.strefakursow.eLunchApp.model.User;
 import pl.strefakursow.eLunchApp.repo.UserRepo;
+import pl.strefakursow.eLunchApp.utils.ConverterUtils;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,7 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> getAll() {
-        return null;
+        return userRepo.findAll().stream()
+                .map(ConverterUtils::convert)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -29,12 +36,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(UUID uuid) {
-
+        User user = userRepo.findByUUID(uuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        userRepo.deleteById(user.getId());
     }
 
     @Override
     public Optional<UserDTO> getByUuid(UUID uuid) {
-        return Optional.empty();
+        return userRepo
+                .findByUUID(uuid)
+                .map(ConverterUtils::convert);
     }
 
     @Override

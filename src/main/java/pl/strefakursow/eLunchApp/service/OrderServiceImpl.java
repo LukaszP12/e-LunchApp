@@ -6,14 +6,18 @@ import org.springframework.web.server.ResponseStatusException;
 import pl.strefakursow.eLunchApp.DTO.OrderDTO;
 import pl.strefakursow.eLunchApp.DTO.OrderStatusDTO;
 import pl.strefakursow.eLunchApp.DTO.UserDTO;
+import pl.strefakursow.eLunchApp.model.DeliveryAddress;
+import pl.strefakursow.eLunchApp.model.Order;
 import pl.strefakursow.eLunchApp.model.User;
 import pl.strefakursow.eLunchApp.repo.DelivererRepo;
+import pl.strefakursow.eLunchApp.repo.DeliveryAddressRepo;
 import pl.strefakursow.eLunchApp.repo.DiscountCodeRepo;
 import pl.strefakursow.eLunchApp.repo.MenuItemRepo;
 import pl.strefakursow.eLunchApp.repo.OrderItemRepo;
 import pl.strefakursow.eLunchApp.repo.OrderRepo;
 import pl.strefakursow.eLunchApp.repo.RestaurantRepo;
 import pl.strefakursow.eLunchApp.repo.UserRepo;
+import pl.strefakursow.eLunchApp.utils.ConverterUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +33,7 @@ public class OrderServiceImpl implements OrderService {
     private final MenuItemRepo menuItemRepo;
     private final DiscountCodeRepo discountCodeRepo;
     private final OrderItemRepo orderItemRepo;
+    private final DeliveryAddressRepo deliveryAddressRepo;
 
 
     public OrderServiceImpl(OrderRepo orderRepo,
@@ -37,7 +42,8 @@ public class OrderServiceImpl implements OrderService {
                             DelivererRepo delivererRepo,
                             MenuItemRepo menuItemRepo,
                             DiscountCodeRepo discountCodeRepo,
-                            OrderItemRepo orderItemRepo) {
+                            OrderItemRepo orderItemRepo,
+                            DeliveryAddressRepo deliveryAddressRepo) {
         this.orderRepo = orderRepo;
         this.userRepo = userRepo;
         this.restaurantRepo = restaurantRepo;
@@ -45,6 +51,7 @@ public class OrderServiceImpl implements OrderService {
         this.menuItemRepo = menuItemRepo;
         this.discountCodeRepo = discountCodeRepo;
         this.orderItemRepo = orderItemRepo;
+        this.deliveryAddressRepo = deliveryAddressRepo;
     }
 
     @Override
@@ -59,12 +66,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void delete(UUID uuid) {
-
+        Order order = orderRepo.findByUUID(uuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        orderRepo.deleteById(order.getId());
     }
 
     @Override
     public Optional<OrderDTO> getByUuid(UUID uuid) {
-        return Optional.empty();
+        return deliveryAddressRepo
+                .findByUUID(uuid)
+                .map(ConverterUtils::convert);
     }
 
     @Override

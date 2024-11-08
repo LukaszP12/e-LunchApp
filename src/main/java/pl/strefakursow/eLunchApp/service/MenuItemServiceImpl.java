@@ -5,10 +5,12 @@ import pl.strefakursow.eLunchApp.DTO.MenuItemDTO;
 import pl.strefakursow.eLunchApp.repo.DishRepo;
 import pl.strefakursow.eLunchApp.repo.MenuItemRepo;
 import pl.strefakursow.eLunchApp.repo.RestaurantRepo;
+import pl.strefakursow.eLunchApp.utils.ConverterUtils;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class MenuItemServiceImpl implements MenuItemService {
@@ -25,7 +27,9 @@ public class MenuItemServiceImpl implements MenuItemService {
 
     @Override
     public List<MenuItemDTO> getAll() {
-        return null;
+        return menuItemRepo.findAll().stream()
+                .map(ConverterUtils::convert)
+                .collect(Collectors.toList());
     }
 
     @Override
