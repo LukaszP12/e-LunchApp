@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public interface OrderItemService {
     List<OrderItem> getAll();
-    void put(UUID uuid, OrderItem orderItem);
+    void addOrderItem(OrderItem orderItem);
     void delete(UUID uuid);
     Optional<OrderItem> getByUuid(UUID uuid);
 

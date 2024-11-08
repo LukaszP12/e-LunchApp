@@ -14,7 +14,7 @@ import java.util.UUID;
 @Repository
 public interface OperationEvidenceRepo extends JpaRepository<OperationEvidence, Long> {
 
-    Optional<OperationEvidenceRepo> findByUUID(UUID uuid);
+    Optional<OperationEvidence> findByUUID(UUID uuid);
 
     @Query("SELECT COALESCE(SUM(CASE WHEN e.type = pl.strefakursow.eLunchApp.model.enums.EvidenceType.DEPOSIT THEN e.amount" +
             "WHEN e.type = pl.strefakursow.eLunchApp.model.enums.EvidenceType.WITHDRAW" +

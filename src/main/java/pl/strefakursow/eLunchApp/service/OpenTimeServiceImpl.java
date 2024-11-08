@@ -4,10 +4,12 @@ import org.springframework.stereotype.Service;
 import pl.strefakursow.eLunchApp.DTO.OpenTimeDTO;
 import pl.strefakursow.eLunchApp.repo.OpenTimeRepo;
 import pl.strefakursow.eLunchApp.repo.RestaurantRepo;
+import pl.strefakursow.eLunchApp.utils.ConverterUtils;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class OpenTimeServiceImpl implements OpenTimeService {
@@ -22,7 +24,9 @@ public class OpenTimeServiceImpl implements OpenTimeService {
 
     @Override
     public List<OpenTimeDTO> getAll() {
-        return null;
+        return openTimeRepo.findAll().stream()
+                .map(ConverterUtils::convert)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -37,6 +41,6 @@ public class OpenTimeServiceImpl implements OpenTimeService {
 
     @Override
     public Optional<OpenTimeDTO> getByUuid(UUID uuid) {
-        return Optional.empty();
+        return openTimeRepo.findByUUID(uuid).map(ConverterUtils::convert);
     }
 }

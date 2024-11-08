@@ -1,6 +1,8 @@
 package pl.strefakursow.eLunchApp.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import pl.strefakursow.eLunchApp.model.DiscountCode;
 import pl.strefakursow.eLunchApp.model.OrderItem;
 import pl.strefakursow.eLunchApp.model.PriceType;
@@ -22,17 +24,18 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public List<OrderItem> getAll() {
-        return null;
+        return orderItemRepo.findAll();
     }
 
     @Override
-    public void put(UUID uuid, OrderItem orderItem) {
-
+    public void addOrderItem(OrderItem orderItem) {
+        
     }
 
     @Override
     public void delete(UUID uuid) {
-
+        OrderItem orderItem = orderItemRepo.findByUUID(uuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        orderItemRepo.deleteById(orderItem.getId());
     }
 
     @Override
