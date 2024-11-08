@@ -1,5 +1,6 @@
 package pl.strefakursow.eLunchApp.service;
 
+import com.google.common.base.Objects;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -49,6 +50,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void validateNewOperation(UUID uuid, UserDTO userDTO) {
+        if (!Objects.equal(userDTO.getUuid(), uuid)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
 
+        userRepo.findByUUID(userDTO.getUuid())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }
