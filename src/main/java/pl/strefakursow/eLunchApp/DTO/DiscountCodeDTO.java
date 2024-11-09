@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import net.karneim.pojobuilder.GeneratePojoBuilder;
 import org.apache.catalina.User;
+import pl.strefakursow.eLunchApp.model.Restaurant;
 import pl.strefakursow.eLunchApp.model.enums.DiscountUnit;
 
 import javax.annotation.Nullable;
@@ -54,7 +55,16 @@ public class DiscountCodeDTO {
 
     @JsonView(View.Extended.class)
     @Nullable
+    private List<UserDTO> usersDTOS;
+
+    @JsonView(View.Extended.class)
+    @Nullable
+    private List<Restaurant> restaurants;
+
+    @JsonView(View.Extended.class)
+    @Nullable
     private List<RestaurantDTO> restaurantDTOS;
+
 
     public Long getId() {
         return id;
@@ -106,11 +116,29 @@ public class DiscountCodeDTO {
     }
 
     @Nullable
+    public List<UserDTO> getUsersDTOS() {
+        return usersDTOS;
+    }
+
+    public void setUsersDTOS(@Nullable List<UserDTO> usersDTOS) {
+        this.usersDTOS = usersDTOS;
+    }
+
+    @Nullable
     public List<RestaurantDTO> getRestaurantDTOS() {
         return restaurantDTOS;
     }
 
     public void setRestaurantDTOS(@Nullable List<RestaurantDTO> restaurantDTOS) {
         this.restaurantDTOS = restaurantDTOS;
+    }
+
+    @Nullable
+    public List<Restaurant> getRestaurants() {
+        return restaurants;
+    }
+
+    public void setRestaurants(List<Restaurant> restaurants) {
+        this.restaurants = restaurants;
     }
 }

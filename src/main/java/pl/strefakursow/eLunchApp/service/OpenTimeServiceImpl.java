@@ -40,28 +40,34 @@ public class OpenTimeServiceImpl implements OpenTimeService {
         return null;
     }
 
+//    @Override
+//    public void put(UUID uuid, OpenTimeDTO openTimeDTO) {
+//        if (!Objects.equals(openTimeDTO.getUuid(), uuid)) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+//        }
+//
+//        Restaurant restaurant = restaurantRepo.findByUUID(openTimeDTO.getRestaurantDTO().getUuid())
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+//
+//        OpenTime openTime = openTimeRepo.findByUUID(openTimeDTO.getUuid())
+//                .orElseThrow(() -> newOpenTime(uuid, restaurant));
+//
+//        if (!Objects.equals(openTime.getRestaurant().getUuid(), openTimeDTO.getRestaurantDTO().getUuid())) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+//        }
+//
+//        openTime.setDayOfWeek(openTimeDTO.getDayOfWeek());
+//        openTime.setPeriodTime(convert(openTimeDTO.getPeriodTimeDTO()));
+//
+//        if (openTime.getId() == null){
+//            openTimeRepo.save(openTime);
+//        }
+//    }
+
+
     @Override
     public void put(UUID uuid, OpenTimeDTO openTimeDTO) {
-        if (!Objects.equals(openTimeDTO.getUuid(), uuid)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-
-        Restaurant restaurant = restaurantRepo.findByUUID(openTimeDTO.getRestaurantDTO().getUuid())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-
-        OpenTime openTime = openTimeRepo.findByUUID(openTimeDTO.getUuid())
-                .orElseThrow(() -> newOpenTime(uuid, restaurant));
-
-        if (!Objects.equals(openTime.getRestaurant().getUuid(), openTimeDTO.getRestaurantDTO().getUuid())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-
-        openTime.setDayOfWeek(openTimeDTO.getDayOfWeek());
-        openTime.setPeriodTime(convert(openTimeDTO.getPeriodTimeDTO()));
-
-        if (openTime.getId() == null){
-            openTimeRepo.save(openTime);
-        }
+        return;
     }
 
     @Override

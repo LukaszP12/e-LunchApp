@@ -4,9 +4,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import pl.strefakursow.eLunchApp.DTO.DiscountCodeDTO;
+import pl.strefakursow.eLunchApp.DTO.DiscountCodeDTOBuilder;
+import pl.strefakursow.eLunchApp.DTO.RestaurantDTO;
 import pl.strefakursow.eLunchApp.DTO.UserDTO;
 import pl.strefakursow.eLunchApp.model.DiscountCode;
+import pl.strefakursow.eLunchApp.model.DiscountCodeBuilder;
+import pl.strefakursow.eLunchApp.model.Restaurant;
 import pl.strefakursow.eLunchApp.model.User;
+import pl.strefakursow.eLunchApp.model.enums.DiscountUnit;
 import pl.strefakursow.eLunchApp.repo.DeliveryAddressRepo;
 import pl.strefakursow.eLunchApp.repo.DiscountCodeRepo;
 import pl.strefakursow.eLunchApp.repo.RestaurantRepo;
@@ -19,6 +24,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import static pl.strefakursow.eLunchApp.utils.ConverterUtils.convert;
 
 @Service
 public class DiscountCodeServiceImpl implements DiscountCodeService {
@@ -57,16 +64,40 @@ public class DiscountCodeServiceImpl implements DiscountCodeService {
 
         List<User> users = new ArrayList<>();
         if (discountCodeDTO.getUsers() != null) {
-            for (UserDTO userDTO : discountCodeDTO.getUsers()) {
-                userRepo.findByUUID(userDTO.getUuid())
+            for (UserDTO userDTO : discountCodeDTO.getUsersDTOS()) {
+                User user = userRepo.findByUUID(userDTO.getUuid())
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+                users.add(user);
+            }
+        }
+
+        List<Restaurant> restaurants = new ArrayList<>();
+        if (discountCodeDTO.getRestaurantDTOS() != null) {
+            for (RestaurantDTO restaurantDTO : discountCodeDTO.getRestaurantDTOS()) {
+                Restaurant restaurant = restaurantRepo.findByUUID(restaurantDTO.getUuid())
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+                restaurants.add(restaurant);
             }
         }
 
         DiscountCode discountCode = discountCodeRepo.findByUUID(discountCodeDTO.getUuid())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+                .orElseThrow(() -> newDiscountCode(uuid))
+        discountCode.setCode(discountCodeDTO.getCode());
+        discountCode.setDiscount(discountCodeDTO.getDiscount());
+        discountCode.setDiscountUnit(discountCodeDTO.getDiscountUnit());
+        discountCode.setPeriod(convert(discountCodeDTO.getPeriod()));
+        discountCode.setUsers(users);
+        discountCode.setRestaurants(restaurants);
 
+        if (discountCode.getId() == null) {
+            discountCodeRepo.save(discountCode);
+        }
+    }
 
+    private DiscountCode newDiscountCode(UUID uuid) {
+        return new DiscountCodeBuilder()
+                .withUuid(uuid)
+                .build();
     }
 
     @Override
@@ -76,13 +107,8 @@ public class DiscountCodeServiceImpl implements DiscountCodeService {
         discountCodeRepo.deleteById(discountCode.getId());
     }
 
-//    @Override
-//    public Optional<DiscountCodeDTO> getByUuid(UUID uuid) {
-//        return deliveryAddressRepo.findByUUID(uuid).map(ConverterUtils::convert);
-//    }
-
     @Override
     public Optional<DiscountCodeDTO> getByUuid(UUID uuid) {
-        return Optional.empty();
+        return deliveryAddressRepo.findByUUID(uuid).map(ConverterUtils::convert);
     }
 }
