@@ -92,12 +92,12 @@ public class UserController {
     }
 
 
-    //TODO getUserAddressess
-    @JsonView(UserView.class)
-    @GetMapping("/{uuid}/delivery-addresses")
-    public List<DeliveryAddressDTO> getUserAddresses(@PathVariable UUID uuid) {
-        UserDTO userDTO = userService.getByUuid(uuid)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return userDTO.getDeliveryAddress();
-    }
+//    //TODO getUserAddressess
+//    @JsonView(UserView.class)
+//    @GetMapping("/{uuid}/delivery-addresses")
+//    public List<DeliveryAddressDTO> getUserAddresses(@PathVariable UUID uuid) {
+//        UserDTO userDTO = userService.getByUuid(uuid)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+//        return userDTO.getDeliveryAddress();
+//    }
 }

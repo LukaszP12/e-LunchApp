@@ -18,11 +18,17 @@ public class IngredientServiceImpl implements IngredientService {
         this.ingredientRepo = ingredientRepo;
     }
 
+//    @Override
+//    public List<IngredientDTO> getAll() {
+//        return ingredientRepo.findAll().stream()
+//                .map(ConverterUtils::convert)
+//                .collect(Collectors.toList());
+//    }
+
+
     @Override
     public List<IngredientDTO> getAll() {
-        return ingredientRepo.findAll().stream()
-                .map(ConverterUtils::convert)
-                .collect(Collectors.toList());
+        return null;
     }
 
     @Override

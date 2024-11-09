@@ -27,10 +27,19 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
     }
 
     @Override
+    public Optional<DeliveryAddressDTO> getByUuid(UUID uuid) {
+        return Optional.empty();
+    }
+//    @Override
+//    public List<DeliveryAddressDTO> getAll() {
+//        return deliveryAddressRepo.findAll().stream()
+//                .map(ConverterUtils::convert)
+//                .collect(Collectors.toList());
+//    }
+
+    @Override
     public List<DeliveryAddressDTO> getAll() {
-        return deliveryAddressRepo.findAll().stream()
-                .map(ConverterUtils::convert)
-                .collect(Collectors.toList());
+        return null;
     }
 
     @Override
@@ -45,8 +54,8 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
         deliveryAddressRepo.deleteById(deliveryAddress.getId());
     }
 
-    @Override
-    public Optional<DeliveryAddressDTO> getByUuid(UUID uuid) {
-        return deliveryAddressRepo.findByUUID(uuid).map(ConverterUtils::convert);
-    }
+//    @Override
+//    public Optional<DeliveryAddressDTO> getByUuid(UUID uuid) {
+//        return deliveryAddressRepo.findByUUID(uuid).map(ConverterUtils::convert);
+//    }
 }

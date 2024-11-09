@@ -25,11 +25,17 @@ public class MenuItemServiceImpl implements MenuItemService {
         this.dishRepo = dishRepo;
     }
 
+//    @Override
+//    public List<MenuItemDTO> getAll() {
+//        return menuItemRepo.findAll().stream()
+//                .map(ConverterUtils::convert)
+//                .collect(Collectors.toList());
+//    }
+
+
     @Override
     public List<MenuItemDTO> getAll() {
-        return menuItemRepo.findAll().stream()
-                .map(ConverterUtils::convert)
-                .collect(Collectors.toList());
+        return null;
     }
 
     @Override

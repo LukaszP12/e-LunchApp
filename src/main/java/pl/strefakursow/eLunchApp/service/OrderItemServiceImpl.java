@@ -58,7 +58,7 @@ public class OrderItemServiceImpl implements OrderItemService {
                     );
                     break;
                 default:
-                    throw new UnsupportedDataTypeException();
+                    throw new UnsupportedDataTypeException("");
             }
         }
         return orderPrice;
@@ -84,7 +84,7 @@ public class OrderItemServiceImpl implements OrderItemService {
                 break;
 
             default:
-                throw new UnsupportedDataTypeException();
+                throw new UnsupportedDataTypeException("");
         }
 
         return amountToPayBrutto;

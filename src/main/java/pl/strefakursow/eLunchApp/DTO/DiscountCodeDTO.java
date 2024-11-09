@@ -21,11 +21,9 @@ import java.util.UUID;
 public class DiscountCodeDTO {
 
     public static class View {
-        public interface Basic {
-        }
+        public interface Basic {}
 
-        public interface Extended extends DeliveryAddressDTO.View.Basic {
-        }
+        public interface Extended extends DeliveryAddressDTO.View.Basic {}
     }
 
     private Long id;
@@ -58,4 +56,61 @@ public class DiscountCodeDTO {
     @Nullable
     private List<RestaurantDTO> restaurantDTOS;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+
+    public DiscountUnit getDiscountUnit() {
+        return discountUnit;
+    }
+
+    public void setDiscountUnit(DiscountUnit discountUnit) {
+        this.discountUnit = discountUnit;
+    }
+
+    @Nullable
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(@Nullable List<User> users) {
+        this.users = users;
+    }
+
+    @Nullable
+    public List<RestaurantDTO> getRestaurantDTOS() {
+        return restaurantDTOS;
+    }
+
+    public void setRestaurantDTOS(@Nullable List<RestaurantDTO> restaurantDTOS) {
+        this.restaurantDTOS = restaurantDTOS;
+    }
 }

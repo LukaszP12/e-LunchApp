@@ -65,19 +65,19 @@ public class OpenTimeDTO {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public PeriodTimeDTO getPeriodTime() {
+    public PeriodTimeDTO getPeriodTimeDTO() {
         return periodTimeDTO;
     }
 
-    public void setPeriodTime(PeriodTimeDTO periodTimeDTO) {
+    public void setPeriodTimeDTO(PeriodTimeDTO periodTimeDTO) {
         this.periodTimeDTO = periodTimeDTO;
     }
 
-    public RestaurantDTO getRestaurant() {
+    public RestaurantDTO getRestaurantDTO() {
         return restaurantDTO;
     }
 
-    public void setRestaurant(RestaurantDTO restaurantDTO) {
+    public void setRestaurantDTO(RestaurantDTO restaurantDTO) {
         this.restaurantDTO = restaurantDTO;
     }
 }
