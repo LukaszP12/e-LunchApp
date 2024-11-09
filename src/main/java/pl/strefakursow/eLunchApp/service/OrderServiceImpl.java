@@ -4,9 +4,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import pl.strefakursow.eLunchApp.DTO.OrderDTO;
+import pl.strefakursow.eLunchApp.DTO.OrderItemDTO;
 import pl.strefakursow.eLunchApp.DTO.OrderStatusDTO;
 import pl.strefakursow.eLunchApp.DTO.UserDTO;
+import pl.strefakursow.eLunchApp.model.Deliverer;
+import pl.strefakursow.eLunchApp.model.MenuItem;
 import pl.strefakursow.eLunchApp.model.Order;
+import pl.strefakursow.eLunchApp.model.OrderBuilder;
+import pl.strefakursow.eLunchApp.model.OrderItem;
+import pl.strefakursow.eLunchApp.model.OrderStatus;
+import pl.strefakursow.eLunchApp.model.OrderStatusBuilder;
+import pl.strefakursow.eLunchApp.model.Restaurant;
 import pl.strefakursow.eLunchApp.model.User;
 import pl.strefakursow.eLunchApp.repo.DelivererRepo;
 import pl.strefakursow.eLunchApp.repo.DeliveryAddressRepo;
@@ -19,7 +27,9 @@ import pl.strefakursow.eLunchApp.repo.UserRepo;
 import pl.strefakursow.eLunchApp.utils.ConverterUtils;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -61,7 +71,72 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void put(UUID uuid, OrderDTO orderDTO) {
+        if (!Objects.equals(orderDTO.getUuid(), uuid)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
 
+        User user = userRepo.findByUUID(orderDTO.getUser().getUuid())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        Deliverer deliverer = delivererRepo.findByUUID(orderDTO.getDeliverer().getUuid())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        Restaurant restaurant = restaurantRepo.findByUUID(orderDTO.getRestaurant().getUuid())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        Order order = orderRepo.findByUUID(orderDTO.getUuid())
+                .orElseGet(() -> newOrder(uuid, user, restaurant));
+
+        if (!Objects.equals(order.getUser().getUuid(), orderDTO.getUser().getUuid())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        if (!Objects.equals(restaurant.getUuid(), orderDTO.getRestaurant().getUuid())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        if (order.getOrderStatus().getDeliveryTime() != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        putOrderItems(orderDTO);
+        putDiscountCode(orderDTO);
+    }
+
+    private void putDiscountCode(OrderDTO orderDTO) {
+
+    }
+
+    private List<OrderItem> putOrderItems(OrderDTO orderDTO) {
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (OrderItemDTO orderItemDTO : orderDTO.getOrderItems()) {
+            MenuItem menuItem = menuItemRepo.findByUUID(orderItemDTO.getMenuItem().getUuid())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+            OrderItem orderItem = orderItemRepo.findByUUID(orderDTO.getUuid())
+                    .orElseGet(() -> newOrderItem(orderDTO.getUuid()));
+            orderItem.setQuantity(orderItemDTO.getQuantity());
+            orderItem.setMenuItem(menuItem);
+            if (orderItem.getId() == null) {
+                orderItemRepo.save(orderItem);
+            }
+            orderItems.add(orderItem);
+        }
+        return orderItems;
+    }
+
+    private OrderItem newOrderItem(UUID uuid) {
+        return null;
+    }
+
+    private Order newOrder(UUID uuid, User user, Restaurant restaurant) {
+        return new OrderBuilder()
+                .withUuid(uuid)
+                .withRestaurant(restaurant)
+                .withOrderStatus(newOrderStatus())
+                .build();
+    }
+
+    private OrderStatus newOrderStatus() {
+        return new OrderStatusBuilder()
+                .withOrderTime(Instant.now())
+                .withIsPaid(false)
+                .build();
     }
 
     @Override
