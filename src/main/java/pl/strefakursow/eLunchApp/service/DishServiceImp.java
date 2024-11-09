@@ -25,11 +25,17 @@ public class DishServiceImp implements DishService {
         this.productRepo = productRepo;
     }
 
+//    @Override
+//    public List<DishDTO> getAll() {
+//        return DishRepo.findAll().stream()
+//                .map(ConverterUtils::convert)
+//                .collect(Collectors.toList());
+//    }
+
+
     @Override
     public List<DishDTO> getAll() {
-        return DishRepo.findAll().stream()
-                .map(ConverterUtils::convert)
-                .collect(Collectors.toList());
+        return null;
     }
 
     @Override

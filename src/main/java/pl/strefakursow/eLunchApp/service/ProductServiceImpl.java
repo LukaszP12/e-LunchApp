@@ -28,11 +28,17 @@ public class ProductServiceImpl implements ProductService {
         this.dishRepo = dishRepo;
     }
 
+//    @Override
+//    public List<ProductDTO> getAll() {
+//        return productRepo.findAll().stream()
+//                .map(ConverterUtils::convert)
+//                .collect(Collectors.toList());
+//    }
+
+
     @Override
     public List<ProductDTO> getAll() {
-        return productRepo.findAll().stream()
-                .map(ConverterUtils::convert)
-                .collect(Collectors.toList());
+        return null;
     }
 
     @Override
@@ -46,10 +52,15 @@ public class ProductServiceImpl implements ProductService {
         productRepo.deleteById(product.getId());
     }
 
+//    @Override
+//    public Optional<ProductDTO> getByUuid(UUID uuid) {
+//        return productRepo
+//                .findByUUID(uuid)
+//                .map(ConverterUtils::convert);
+//    }
+
     @Override
     public Optional<ProductDTO> getByUuid(UUID uuid) {
-        return productRepo
-                .findByUUID(uuid)
-                .map(ConverterUtils::convert);
+        return Optional.empty();
     }
 }

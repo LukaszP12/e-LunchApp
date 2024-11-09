@@ -70,11 +70,17 @@ public class OrderServiceImpl implements OrderService {
         orderRepo.deleteById(order.getId());
     }
 
+//    @Override
+//    public Optional<OrderDTO> getByUuid(UUID uuid) {
+//        return deliveryAddressRepo
+//                .findByUUID(uuid)
+//                .map(ConverterUtils::convert);
+//    }
+
+
     @Override
     public Optional<OrderDTO> getByUuid(UUID uuid) {
-        return deliveryAddressRepo
-                .findByUUID(uuid)
-                .map(ConverterUtils::convert);
+        return Optional.empty();
     }
 
     @Override
@@ -121,6 +127,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDTO> getByUser(UserDTO userDTO) {
         User user = userRepo.findByUUID(userDTO.getUuid()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return user.getOrders();
+
+//        return user.getOrders();
+        return null;
     }
 }

@@ -23,12 +23,12 @@ public class UserServiceImpl implements UserService {
         this.userRepo = userRepo;
     }
 
-    @Override
-    public List<UserDTO> getAll() {
-        return userRepo.findAll().stream()
-                .map(ConverterUtils::convert)
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<UserDTO> getAll() {
+//        return userRepo.findAll().stream()
+//                .map(ConverterUtils::convert)
+//                .collect(Collectors.toList());
+//    }
 
     @Override
     public void put(UUID uuid, UserDTO userDTO) {
@@ -42,11 +42,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDTO> getByUuid(UUID uuid) {
-        return userRepo
-                .findByUUID(uuid)
-                .map(ConverterUtils::convert);
+    public List<UserDTO> getAll() {
+        return null;
     }
+
+    @Override
+    public Optional<UserDTO> getByUuid(UUID uuid) {
+        return Optional.empty();
+    }
+
+    //    @Override
+//    public Optional<UserDTO> getByUuid(UUID uuid) {
+//        return userRepo
+//                .findByUUID(uuid)
+//                .map(ConverterUtils::convert);
+//    }
 
     @Override
     public void validateNewOperation(UUID uuid, UserDTO userDTO) {

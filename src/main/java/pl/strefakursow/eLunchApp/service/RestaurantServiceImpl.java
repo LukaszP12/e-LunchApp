@@ -22,11 +22,17 @@ public class RestaurantServiceImpl implements RestaurantService {
         this.restaurantRepo = restaurantRepo;
     }
 
+//    @Override
+//    public List<RestaurantDTO> getAll() {
+//        return restaurantRepo.findAll().stream()
+//                .map(ConverterUtils::convert)
+//                .collect(Collectors.toList());
+//    }
+
+
     @Override
     public List<RestaurantDTO> getAll() {
-        return restaurantRepo.findAll().stream()
-                .map(ConverterUtils::convert)
-                .collect(Collectors.toList());
+        return null;
     }
 
     @Override
@@ -40,10 +46,15 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurantRepo.deleteById(restaurant.getId());
     }
 
+//    @Override
+//    public Optional<RestaurantDTO> getByUuid(UUID uuid) {
+//        return restaurantRepo
+//                .findByUUID(uuid)
+//                .map(ConverterUtils::convert);
+//    }
+
     @Override
     public Optional<RestaurantDTO> getByUuid(UUID uuid) {
-        return restaurantRepo
-                .findByUUID(uuid)
-                .map(ConverterUtils::convert);
+        return Optional.empty();
     }
 }

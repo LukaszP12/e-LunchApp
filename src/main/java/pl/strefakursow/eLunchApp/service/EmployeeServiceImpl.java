@@ -18,11 +18,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeRepo = employeeRepo;
     }
 
+//    @Override
+//    public List<EmployeeDTO> getAll() {
+//        return employeeRepo.findAll().stream()
+//                .map(ConverterUtils::convert)
+//                .collect(Collectors.toList());
+//    }
+
+
     @Override
     public List<EmployeeDTO> getAll() {
-        return employeeRepo.findAll().stream()
-                .map(ConverterUtils::convert)
-                .collect(Collectors.toList());
+        return null;
     }
 
     @Override
