@@ -58,41 +58,46 @@ public class DiscountCodeServiceImpl implements DiscountCodeService {
 
     @Override
     public void put(UUID uuid, DiscountCodeDTO discountCodeDTO) {
-        if (!Objects.equals(discountCodeDTO.getUuid(), uuid)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-
-        List<User> users = new ArrayList<>();
-        if (discountCodeDTO.getUsers() != null) {
-            for (UserDTO userDTO : discountCodeDTO.getUsersDTOS()) {
-                User user = userRepo.findByUUID(userDTO.getUuid())
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-                users.add(user);
-            }
-        }
-
-        List<Restaurant> restaurants = new ArrayList<>();
-        if (discountCodeDTO.getRestaurantDTOS() != null) {
-            for (RestaurantDTO restaurantDTO : discountCodeDTO.getRestaurantDTOS()) {
-                Restaurant restaurant = restaurantRepo.findByUUID(restaurantDTO.getUuid())
-                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-                restaurants.add(restaurant);
-            }
-        }
-
-        DiscountCode discountCode = discountCodeRepo.findByUUID(discountCodeDTO.getUuid())
-                .orElseThrow(() -> newDiscountCode(uuid))
-        discountCode.setCode(discountCodeDTO.getCode());
-        discountCode.setDiscount(discountCodeDTO.getDiscount());
-        discountCode.setDiscountUnit(discountCodeDTO.getDiscountUnit());
-        discountCode.setPeriod(convert(discountCodeDTO.getPeriod()));
-        discountCode.setUsers(users);
-        discountCode.setRestaurants(restaurants);
-
-        if (discountCode.getId() == null) {
-            discountCodeRepo.save(discountCode);
-        }
+        return;
     }
+
+    //    @Override
+//    public void put(UUID uuid, DiscountCodeDTO discountCodeDTO) {
+//        if (!Objects.equals(discountCodeDTO.getUuid(), uuid)) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+//        }
+//
+//        List<User> users = new ArrayList<>();
+//        if (discountCodeDTO.getUsers() != null) {
+//            for (UserDTO userDTO : discountCodeDTO.getUsersDTOS()) {
+//                User user = userRepo.findByUUID(userDTO.getUuid())
+//                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+//                users.add(user);
+//            }
+//        }
+//
+//        List<Restaurant> restaurants = new ArrayList<>();
+//        if (discountCodeDTO.getRestaurantDTOS() != null) {
+//            for (RestaurantDTO restaurantDTO : discountCodeDTO.getRestaurantDTOS()) {
+//                Restaurant restaurant = restaurantRepo.findByUUID(restaurantDTO.getUuid())
+//                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+//                restaurants.add(restaurant);
+//            }
+//        }
+//
+////        DiscountCode discountCode = discountCodeRepo.findByUUID(discountCodeDTO.getUuid())
+////                .orElseThrow(() -> newDiscountCode(uuid))
+//        discountCode.setCode(discountCodeDTO.getCode());
+//        discountCode.setDiscount(discountCodeDTO.getDiscount());
+//        discountCode.setDiscountUnit(discountCodeDTO.getDiscountUnit());
+////        discountCode.setPeriod(convert(discountCodeDTO.getPeriod()));
+//        discountCode.setUsers(users);
+//        discountCode.setRestaurants(restaurants);
+//
+//        if (discountCode.getId() == null) {
+//            discountCodeRepo.save(discountCode);
+//        }
+//    }
 
     private DiscountCode newDiscountCode(UUID uuid) {
         return new DiscountCodeBuilder()
@@ -107,8 +112,13 @@ public class DiscountCodeServiceImpl implements DiscountCodeService {
         discountCodeRepo.deleteById(discountCode.getId());
     }
 
+//    @Override
+//    public Optional<DiscountCodeDTO> getByUuid(UUID uuid) {
+//        return deliveryAddressRepo.findByUUID(uuid).map(ConverterUtils::convert);
+//    }
+
     @Override
     public Optional<DiscountCodeDTO> getByUuid(UUID uuid) {
-        return deliveryAddressRepo.findByUUID(uuid).map(ConverterUtils::convert);
+        return Optional.empty();
     }
 }
