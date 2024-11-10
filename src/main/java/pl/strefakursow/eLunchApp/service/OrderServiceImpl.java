@@ -8,12 +8,15 @@ import pl.strefakursow.eLunchApp.DTO.OrderItemDTO;
 import pl.strefakursow.eLunchApp.DTO.OrderStatusDTO;
 import pl.strefakursow.eLunchApp.DTO.UserDTO;
 import pl.strefakursow.eLunchApp.model.Deliverer;
+import pl.strefakursow.eLunchApp.model.DiscountCode;
 import pl.strefakursow.eLunchApp.model.MenuItem;
 import pl.strefakursow.eLunchApp.model.Order;
 import pl.strefakursow.eLunchApp.model.OrderBuilder;
 import pl.strefakursow.eLunchApp.model.OrderItem;
+import pl.strefakursow.eLunchApp.model.OrderItemBuilder;
 import pl.strefakursow.eLunchApp.model.OrderStatus;
 import pl.strefakursow.eLunchApp.model.OrderStatusBuilder;
+import pl.strefakursow.eLunchApp.model.PriceType;
 import pl.strefakursow.eLunchApp.model.Restaurant;
 import pl.strefakursow.eLunchApp.model.User;
 import pl.strefakursow.eLunchApp.repo.DelivererRepo;
@@ -24,8 +27,8 @@ import pl.strefakursow.eLunchApp.repo.OrderItemRepo;
 import pl.strefakursow.eLunchApp.repo.OrderRepo;
 import pl.strefakursow.eLunchApp.repo.RestaurantRepo;
 import pl.strefakursow.eLunchApp.repo.UserRepo;
-import pl.strefakursow.eLunchApp.utils.ConverterUtils;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +47,7 @@ public class OrderServiceImpl implements OrderService {
     private final DiscountCodeRepo discountCodeRepo;
     private final OrderItemRepo orderItemRepo;
     private final DeliveryAddressRepo deliveryAddressRepo;
+    private final OrderItemService orderItemService;
 
 
     public OrderServiceImpl(OrderRepo orderRepo,
@@ -53,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
                             MenuItemRepo menuItemRepo,
                             DiscountCodeRepo discountCodeRepo,
                             OrderItemRepo orderItemRepo,
-                            DeliveryAddressRepo deliveryAddressRepo) {
+                            DeliveryAddressRepo deliveryAddressRepo, OrderItemService orderItemService) {
         this.orderRepo = orderRepo;
         this.userRepo = userRepo;
         this.restaurantRepo = restaurantRepo;
@@ -62,6 +66,7 @@ public class OrderServiceImpl implements OrderService {
         this.discountCodeRepo = discountCodeRepo;
         this.orderItemRepo = orderItemRepo;
         this.deliveryAddressRepo = deliveryAddressRepo;
+        this.orderItemService = orderItemService;
     }
 
     @Override
@@ -94,12 +99,53 @@ public class OrderServiceImpl implements OrderService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
-        putOrderItems(orderDTO);
-        putDiscountCode(orderDTO);
+        List<OrderItem> orderItems = putOrderItems(orderDTO);
+        DiscountCode discountCode = putDiscountCode(orderDTO);
+
+        BigDecimal orderNettoPrice;
+        BigDecimal orderBruttoPrice;
+        BigDecimal amountToPayBrutto;
+        try {
+            orderNettoPrice = orderItemService.calculatePrice(orderItems, BigDecimal.ZERO, PriceType.NETTO);
+            orderBruttoPrice = orderItemService.calculatePrice(orderItems, BigDecimal.ZERO, PriceType.BRUTTO);
+            amountToPayBrutto = orderItemService.applyDiscount(discountCode, orderBruttoPrice);
+        } catch (UnsupportedOperationException e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
+        order.setNote(orderDTO.getNote());
+        order.setNettoPrice(orderNettoPrice);
+        order.setBruttoPrice(orderBruttoPrice);
+        order.setAmountToPayBrutto(amountToPayBrutto);
+        order.setDiscountCode(discountCode);
+        order.setOrderItems(orderItems);
+        order.setDeliverer(deliverer);
+
+        if (order.getId() == null) {
+            orderRepo.save(order);
+        }
     }
 
-    private void putDiscountCode(OrderDTO orderDTO) {
-
+    private DiscountCode putDiscountCode(OrderDTO orderDTO) {
+        DiscountCode discountCode = null;
+        if (orderDTO.getDiscountCode() != null) {
+            discountCode = discountCodeRepo.findByUUID(orderDTO.getDiscountCode().getUuid())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+            if (discountCode.getRestaurants() != null) {
+                discountCode.getRestaurants().stream()
+                        .filter(r -> orderDTO.getRestaurant().getUuid().equals(r.getUuid()))
+                        .findFirst()
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+            }
+            if (discountCode.getUsers() != null) {
+                discountCode.getUsers().stream()
+                        .filter(u -> orderDTO.getUser().getUuid().equals(u.getUuid()))
+                        .findFirst()
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+            }
+        }
+        return discountCode;
     }
 
     private List<OrderItem> putOrderItems(OrderDTO orderDTO) {
@@ -121,7 +167,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private OrderItem newOrderItem(UUID uuid) {
-        return null;
+        return new OrderItemBuilder()
+                .withUuid(uuid)
+                .build();
     }
 
     private Order newOrder(UUID uuid, User user, Restaurant restaurant) {
