@@ -90,7 +90,7 @@ public class OrderController {
     public List<OrderDTO> getByDeliverer(@RequestParam("deliverer") UUID delivererUuid) {
         DelivererDTO delivererDTO = delivererService.getByUUID(delivererUuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return delivererDTO.getOrders();
+        return delivererDTO.getOrdersDtos();
     }
 
     @JsonView(OrderView.class)
