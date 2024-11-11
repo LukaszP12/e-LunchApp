@@ -79,5 +79,8 @@ public class DelivererControllerTest {
                 TestUtils.personalDataDTO("John1", "Smith1", Sex.FEMALE, "501-501-501", "jh5123@gmail.com"),
                 TestUtils.logginDataDTO("jSmith1", "I@mIronM@n12"), Archive.ARCHIVE);
         delivererController.put(UUID.fromString(STR_UUID), delivererJson);
+
+        DelivererDTO delivererDB = delivererService.getByUUID(UUID.fromString(STR_UUID)).orElseThrow();
+        AssertionUtils.assertEquals(delivererJson, delivererDB);
     }
 }

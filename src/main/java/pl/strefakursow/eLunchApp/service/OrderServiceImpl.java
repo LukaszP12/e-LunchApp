@@ -3,7 +3,6 @@ package pl.strefakursow.eLunchApp.service;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import pl.strefakursow.eLunchApp.DTO.DelivererDTO;
 import pl.strefakursow.eLunchApp.DTO.OperationEvidenceDTO;
 import pl.strefakursow.eLunchApp.DTO.OperationEvidenceDTOBuilder;
 import pl.strefakursow.eLunchApp.DTO.OrderDTO;
@@ -250,11 +249,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public UserDTO newOperationForPaidOrder(OrderDTO orderDTO) {
-        User user = userRepo.findByUUID(orderDTO.getUser().getUuid())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        UserDTO userDTO = ConverterUtils.convert(user);
-        userDTO.setOperationEvidence(List.of(newEvidenceForOrderPayment(orderDTO)));
-        return userDTO;
+//        User user = userRepo.findByUUID(orderDTO.getUser().getUuid())
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+////        UserDTO userDTO = ConverterUtils.convert(user);
+//        userDTO.setOperationEvidence(List.of(newEvidenceForOrderPayment(orderDTO)));
+//        return userDTO;
+        return null;
     }
 
     private OperationEvidenceDTO newEvidenceForOrderPayment(OrderDTO orderDTO) {
