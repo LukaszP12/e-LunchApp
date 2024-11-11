@@ -23,6 +23,7 @@ import pl.strefakursow.eLunchApp.DTO.OrderDTO;
 import pl.strefakursow.eLunchApp.DTO.OrderStatusDTO;
 import pl.strefakursow.eLunchApp.DTO.RestaurantDTO;
 import pl.strefakursow.eLunchApp.DTO.UserDTO;
+import pl.strefakursow.eLunchApp.events.OperationEvidenceCreator;
 import pl.strefakursow.eLunchApp.service.DelivererService;
 import pl.strefakursow.eLunchApp.service.OrderService;
 import pl.strefakursow.eLunchApp.service.UserService;
@@ -121,21 +122,24 @@ public class OrderController {
         OrderDTO orderDTO = orderService.getByUuid(uuid)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         orderService.setIsPaid(orderDTO);
+
+        OperationEvidenceCreator operationEvidenceCreator = new OperationEvidenceCreator(this, orderService.newOperationForPaidOrder(orderDTO));
+        applicationEventPublisher.publishEvent(operationEvidenceCreator);
     }
 
     //TODO patchIsGivenOut
     @Transactional
     @Validated(GiveOutValidation.class)
     @PatchMapping("/{uuid}/IsGivenOut")
-    public void patchIsGivenOut(@PathVariable UUID uuid,@RequestBody @Valid OrderStatusDTO orderStatusJson) {
-        orderService.setIsGivenOut(uuid,orderStatusJson);
+    public void patchIsGivenOut(@PathVariable UUID uuid, @RequestBody @Valid OrderStatusDTO orderStatusJson) {
+        orderService.setIsGivenOut(uuid, orderStatusJson);
     }
 
     //TODO patchIsDelivered
     @Transactional
     @Validated(DeliveryValidation.class)
     @PatchMapping("/{uuid}/IsDelivered")
-    public void patchIsDelivered(@PathVariable UUID uuid,@RequestBody @Valid OrderStatusDTO orderStatusJson) {
-        orderService.setIsDelivered(uuid,orderStatusJson);
+    public void patchIsDelivered(@PathVariable UUID uuid, @RequestBody @Valid OrderStatusDTO orderStatusJson) {
+        orderService.setIsDelivered(uuid, orderStatusJson);
     }
 }

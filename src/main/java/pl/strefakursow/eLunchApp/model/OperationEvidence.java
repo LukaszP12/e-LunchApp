@@ -10,11 +10,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import net.karneim.pojobuilder.GeneratePojoBuilder;
 import pl.strefakursow.eLunchApp.model.enums.EvidenceType;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
+@GeneratePojoBuilder
 @Entity
 public class OperationEvidence {
 

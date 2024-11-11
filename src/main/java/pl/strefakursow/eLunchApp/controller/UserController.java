@@ -23,6 +23,7 @@ import pl.strefakursow.eLunchApp.DTO.LogginDataDTO;
 import pl.strefakursow.eLunchApp.DTO.OperationEvidenceDTO;
 import pl.strefakursow.eLunchApp.DTO.PersonalDataDTO;
 import pl.strefakursow.eLunchApp.DTO.UserDTO;
+import pl.strefakursow.eLunchApp.events.OperationEvidenceCreator;
 import pl.strefakursow.eLunchApp.model.DeliveryAddress;
 import pl.strefakursow.eLunchApp.service.UserService;
 
@@ -89,6 +90,9 @@ public class UserController {
     @PostMapping("/{uuid}/new-operation")
     public void postOperation(@PathVariable UUID uuid, @RequestBody @Valid UserDTO json) {
         userService.validateNewOperation(uuid,json);
+
+        OperationEvidenceCreator operationEvidenceCreator = new OperationEvidenceCreator(this, json);
+        applicationEventPublisher.publishEvent(operationEvidenceCreator);
     }
 
 
