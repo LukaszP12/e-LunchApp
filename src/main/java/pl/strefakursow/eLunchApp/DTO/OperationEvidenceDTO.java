@@ -43,7 +43,7 @@ public class OperationEvidenceDTO {
     private BigDecimal amount;
 
     @JsonIgnore
-    private UserDTO user;
+    private User user;
 
     public Long getId() {
         return id;
@@ -77,11 +77,11 @@ public class OperationEvidenceDTO {
         this.amount = amount;
     }
 
-    public UserDTO getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserDTO user) {
+    public void setUser(User user) {
         this.user = user;
     }
 }

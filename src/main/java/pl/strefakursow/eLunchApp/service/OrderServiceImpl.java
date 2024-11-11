@@ -3,6 +3,9 @@ package pl.strefakursow.eLunchApp.service;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import pl.strefakursow.eLunchApp.DTO.DelivererDTO;
+import pl.strefakursow.eLunchApp.DTO.OperationEvidenceDTO;
+import pl.strefakursow.eLunchApp.DTO.OperationEvidenceDTOBuilder;
 import pl.strefakursow.eLunchApp.DTO.OrderDTO;
 import pl.strefakursow.eLunchApp.DTO.OrderItemDTO;
 import pl.strefakursow.eLunchApp.DTO.OrderStatusDTO;
@@ -19,6 +22,7 @@ import pl.strefakursow.eLunchApp.model.OrderStatusBuilder;
 import pl.strefakursow.eLunchApp.model.PriceType;
 import pl.strefakursow.eLunchApp.model.Restaurant;
 import pl.strefakursow.eLunchApp.model.User;
+import pl.strefakursow.eLunchApp.model.enums.EvidenceType;
 import pl.strefakursow.eLunchApp.repo.DelivererRepo;
 import pl.strefakursow.eLunchApp.repo.DeliveryAddressRepo;
 import pl.strefakursow.eLunchApp.repo.DiscountCodeRepo;
@@ -27,6 +31,7 @@ import pl.strefakursow.eLunchApp.repo.OrderItemRepo;
 import pl.strefakursow.eLunchApp.repo.OrderRepo;
 import pl.strefakursow.eLunchApp.repo.RestaurantRepo;
 import pl.strefakursow.eLunchApp.repo.UserRepo;
+import pl.strefakursow.eLunchApp.utils.ConverterUtils;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -127,6 +132,7 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+
     private DiscountCode putDiscountCode(OrderDTO orderDTO) {
         DiscountCode discountCode = null;
         if (orderDTO.getDiscountCode() != null) {
@@ -193,7 +199,7 @@ public class OrderServiceImpl implements OrderService {
         orderRepo.deleteById(order.getId());
     }
 
-//    @Override
+    //    @Override
 //    public Optional<OrderDTO> getByUuid(UUID uuid) {
 //        return deliveryAddressRepo
 //                .findByUUID(uuid)
@@ -244,7 +250,20 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public UserDTO newOperationForPaidOrder(OrderDTO orderDTO) {
-        return null;
+        User user = userRepo.findByUUID(orderDTO.getUser().getUuid())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        UserDTO userDTO = ConverterUtils.convert(user);
+        userDTO.setOperationEvidence(List.of(newEvidenceForOrderPayment(orderDTO)));
+        return userDTO;
+    }
+
+    private OperationEvidenceDTO newEvidenceForOrderPayment(OrderDTO orderDTO) {
+        return new OperationEvidenceDTOBuilder()
+                .withDate(Instant.now())
+                .withUser(orderDTO.getUser())
+                .withAmount(orderDTO.getAmountToPayBrutto())
+                .withType(EvidenceType.PAYMENT)
+                .build();
     }
 
     @Override

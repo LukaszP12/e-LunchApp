@@ -63,7 +63,7 @@ public class UserDTO {
     @NotNull
     @Size(max = 0, groups = DataUpdateValidation.class)
     @Size(min = 1, max = 1, groups = DataUpdateValidation.class)
-    private List<OperationEvidenceDTO> operationEvidences;
+    private List<OperationEvidenceDTO> operationEvidence;
 
     @JsonView(View.Extended.class)
     @Nullable
@@ -99,12 +99,12 @@ public class UserDTO {
     }
 
 
-    public @NotNull List<OperationEvidenceDTO> getOperationEvidences() {
-        return operationEvidences;
+    public @NotNull List<OperationEvidenceDTO> getOperationEvidence() {
+        return operationEvidence;
     }
 
-    public void setOperationEvidences(List<OperationEvidenceDTO> operationEvidences) {
-        this.operationEvidences = operationEvidences;
+    public void setOperationEvidence(List<OperationEvidenceDTO> operationEvidence) {
+        this.operationEvidence = operationEvidence;
     }
 
     @Nullable

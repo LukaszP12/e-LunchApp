@@ -70,8 +70,8 @@ public class DelivererServiceImpl implements DelivererService {
             }
         }
 
-        deliverer.setPersonalData(convert(delivererDTO.getPersonalData()));
-        deliverer.setLoginData(convert(delivererDTO.getLoginData()));
+//        deliverer.setPersonalData(convert(delivererDTO.getPersonalData()));
+//        deliverer.setLoginData(convert(delivererDTO.getLoginData()));
         deliverer.setArchive(delivererDTO.getArchive());
         deliverer.setOrders(orders);
 
