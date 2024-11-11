@@ -1,5 +1,6 @@
 package pl.strefakursow.eLunchApp.controller;
 
+import org.apache.catalina.webresources.AbstractResource;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,6 +10,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 import pl.strefakursow.eLunchApp.DTO.DelivererDTO;
 import pl.strefakursow.eLunchApp.config.JpaConfiguration;
+import pl.strefakursow.eLunchApp.model.Deliverer;
 import pl.strefakursow.eLunchApp.model.enums.Archive;
 import pl.strefakursow.eLunchApp.model.enums.Sex;
 import pl.strefakursow.eLunchApp.repo.DelivererRepo;
@@ -68,6 +70,14 @@ public class DelivererControllerTest {
     @Test
     @Transactional
     public void put2() {
+        Deliverer deliverer = TestUtils.deliverer(STR_UUID,
+                TestUtils.personalDataDTO("John", "Smith", Sex.MALE, "501-501-501", "john512@gmail.coom"),
+                TestUtils.logginDataDTO("jSmith", "I@mIronM@n12"), Archive.CURRENT);
+        delivererRepo.save(deliverer);
 
+        DelivererDTO delivererJson = TestUtils.delivererDTO(STR_UUID,
+                TestUtils.personalDataDTO("John1", "Smith1", Sex.MALE, "501-501-501", "jh512@gmail.com"),
+                TestUtils.logginDataDTO("jSmith", "I@mIronM@n12"), Archive.CURRENT);
+        delivererController.put(UUID.fromString(STR_UUID), delivererJson);
     }
 }
