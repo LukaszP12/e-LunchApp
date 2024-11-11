@@ -29,13 +29,13 @@ public class OperationEvidenceListener {
 
     @EventListener
     public void onAddOperation(OperationEvidenceCreator operationEvidenceCreator) {
-        UserDTO userDTO = operationEvidenceCreator.getUserDTO();
-        OperationEvidence operationEvidence = ConverterUtils.convert(userDTO.getOperationEvidence().stream().findFirst().orElseThrow());
-        User user = userRepo.findByUUID(userDTO.getUuid()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-        operationEvidence.setUser(user);
-
-        validateAccountBalanceAfterOperation(operationEvidence);
-        operationEvidenceService.add(operationEvidence);
+//        UserDTO userDTO = operationEvidenceCreator.getUserDTO();
+//        OperationEvidence operationEvidence = ConverterUtils.convert(userDTO.getOperationEvidence().stream().findFirst().orElseThrow());
+//        User user = userRepo.findByUUID(userDTO.getUuid()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+//        operationEvidence.setUser(user);
+//
+//        validateAccountBalanceAfterOperation(operationEvidence);
+//        operationEvidenceService.add(operationEvidence);
     }
 
     private void validateAccountBalanceAfterOperation(OperationEvidence operationEvidence) {
