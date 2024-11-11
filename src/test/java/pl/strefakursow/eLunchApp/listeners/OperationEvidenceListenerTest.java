@@ -53,5 +53,4 @@ public class OperationEvidenceListenerTest {
     private UserController userController;
 
     private static final String STR_UUID = "168c9a63-56be-47a9-9dce-e4008f7d5d34";
-
 }
